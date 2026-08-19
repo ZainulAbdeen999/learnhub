@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnHub - Test Links</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; }
+    h1 { text-align: center; margin-bottom: 0.5rem; color: #22c55e; }
+    .subtitle { text-align: center; color: #94a3b8; margin-bottom: 2rem; font-size: 0.9rem; }
+    .section { margin-bottom: 2rem; background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; }
+    .section h2 { color: #22c55e; margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.75rem; }
+    .link-card { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1rem; transition: all 0.2s; }
+    .link-card:hover { border-color: #22c55e; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34,197,94,0.15); }
+    .link-card a { color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+    .link-card a:hover { color: #22c55e; }
+    .link-card .desc { color: #94a3b8; font-size: 0.8rem; margin-top: 0.25rem; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-left: 6px; }
+    .badge-free { background: #166534; color: #4ade80; }
+    .badge-paid { background: #854d0e; color: #fbbf24; }
+    .badge-admin { background: #7c2d12; color: #fb923c; }
+    .badge-promo { background: #4c1d95; color: #c084fc; }
+    .credentials { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin-top: 1rem; font-family: monospace; font-size: 0.85rem; line-height: 1.8; }
+    .credentials span { color: #22c55e; font-weight: bold; }
+    .test-info { background: #172554; border: 1px solid #1e40af; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.6; }
+    .test-info strong { color: #60a5fa; }
+  </style>
+</head>
+<body>
+
+  <h1>LearnHub Test Dashboard</h1>
+  <p class="subtitle">All test links for verifying the platform</p>
+
+  <div class="test-info">
+    <strong>How to test:</strong> First login with student credentials below, then click any link. 
+    For payment testing, go to a paid course and click "Buy Now" → you'll be redirected to the payment page.
+  </div>
+
+  <!-- LOGIN CREDENTIALS -->
+  <div class="section">
+    <h2>Login Credentials</h2>
+    <div class="credentials">
+      <div><strong>Student:</strong> <span>student@learnhub.com</span> / <span>student123</span></div>
+      <div><strong>Admin:</strong> <span>admin@learnhub.com</span> / <span>admin123</span></div>
+      <div><strong>Admin Key:</strong> <span>admin-key-123</span></div>
+    </div>
+  </div>
+
+  <!-- PROMO CODES -->
+  <div class="section">
+    <h2>Promo Codes</h2>
+    <div class="grid">
+      <div class="link-card">
+        <a href="#">LEARN20</a> <span class="badge badge-promo">20% OFF</span>
+        <div class="desc">Works on all courses</div>
+      </div>
+      <div class="link-card">
+        <a href="#">WELCOME10</a> <span class="badge badge-promo">10% OFF</span>
+        <div class="desc">Welcome discount for new users</div>
+      </div>
+      <div class="link-card">
+        <a href="#">STUDENT50</a> <span class="badge badge-promo">50% OFF</span>
+        <div class="desc">Student discount - half price!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN PAGES -->
+  <div class="section">
+    <h2>Pages</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/" target="_blank">Home Page</a><div class="desc">Landing page with hero, categories, features</div></div>
+      <div class="link-card"><a href="http://localhost:5173/courses" target="_blank">All Courses</a><div class="desc">Course grid with filters</div></div>
+      <div class="link-card"><a href="http://localhost:5173/login" target="_blank">Login</a><div class="desc">Student/Admin login</div></div>
+      <div class="link-card"><a href="http://localhost:5173/register" target="_blank">Register</a><div class="desc">New account creation</div></div>
+      <div class="link-card"><a href="http://localhost:5173/dashboard" target="_blank">Dashboard</a><div class="desc">Charts, progress, purchases</div></div>
+      <div class="link-card"><a href="http://localhost:5173/practice" target="_blank">Practice</a><div class="desc">Free practice exercises</div></div>
+      <div class="link-card"><a href="http://localhost:5173/admin" target="_blank">Admin Panel</a> <span class="badge badge-admin">ADMIN</span><div class="desc">Manage courses, users, earnings</div></div>
+      <div class="link-card"><a href="http://localhost:5173/search?q=javascript" target="_blank">Search: javascript</a><div class="desc">Search results with courses + lessons</div></div>
+      <div class="link-card"><a href="http://localhost:5173/search?q=python" target="_blank">Search: python</a><div class="desc">Search results for Python</div></div>
+      <div class="link-card"><a href="http://localhost:5173/search?q=html" target="_blank">Search: html</a><div class="desc">Search results for HTML</div></div>
+    </div>
+  </div>
+
+  <!-- COURSE PAGES -->
+  <div class="section">
+    <h2>Course Pages</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/course/html" target="_blank">Learn HTML</a> <span class="badge badge-free">FREE</span><div class="desc">12 lessons, 3 quizzes</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/css" target="_blank">Learn CSS</a> <span class="badge badge-paid">$9</span><div class="desc">11 lessons, 3 quizzes - needs payment</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/javascript" target="_blank">Learn JavaScript</a> <span class="badge badge-paid">$15</span><div class="desc">13 lessons, 3 quizzes - needs payment</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/python" target="_blank">Learn Python</a> <span class="badge badge-paid">$12</span><div class="desc">12 lessons, 3 quizzes - needs payment</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/sql" target="_blank">Learn SQL</a> <span class="badge badge-paid">$10</span><div class="desc">9 lessons, 3 quizzes - needs payment</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/react" target="_blank">Learn React</a> <span class="badge badge-paid">$18</span><div class="desc">9 lessons, 3 quizzes - needs payment</div></div>
+      <div class="link-card"><a href="http://localhost:5173/course/bootstrap" target="_blank">Learn Bootstrap</a> <span class="badge badge-free">FREE</span><div class="desc">8 lessons, 3 quizzes</div></div>
+    </div>
+  </div>
+
+  <!-- PAYMENT PAGES -->
+  <div class="section">
+    <h2>Payment / Checkout Pages</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/payment/css" target="_blank">Pay for CSS ($9)</a><div class="desc">Try JazzCash, EasyPaisa, Bank Transfer, Card</div></div>
+      <div class="link-card"><a href="http://localhost:5173/payment/javascript" target="_blank">Pay for JavaScript ($15)</a><div class="desc">Try promo codes: LEARN20, STUDENT50</div></div>
+      <div class="link-card"><a href="http://localhost:5173/payment/python" target="_blank">Pay for Python ($12)</a><div class="desc">Try WELCOME10 for 10% off</div></div>
+      <div class="link-card"><a href="http://localhost:5173/payment/sql" target="_blank">Pay for SQL ($10)</a><div class="desc">Try bank transfer flow</div></div>
+      <div class="link-card"><a href="http://localhost:5173/payment/react" target="_blank">Pay for React ($18)</a><div class="desc">Most expensive course - try all methods</div></div>
+    </div>
+  </div>
+
+  <!-- LESSON PAGES (FREE) -->
+  <div class="section">
+    <h2>Free Lesson Pages (HTML Course - no payment needed)</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/lesson/html/1" target="_blank">HTML Introduction</a><div class="desc">Lesson 1 with code playground</div></div>
+      <div class="link-card"><a href="http://localhost:5173/lesson/html/2" target="_blank">HTML Elements</a><div class="desc">Lesson 2 with challenges</div></div>
+      <div class="link-card"><a href="http://localhost:5173/lesson/html/3" target="_blank">HTML Attributes</a><div class="desc">Lesson 3</div></div>
+      <div class="link-card"><a href="http://localhost:5173/lesson/html/4" target="_blank">HTML Headings</a><div class="desc">Lesson 4</div></div>
+    </div>
+  </div>
+
+  <!-- QUIZ PAGES -->
+  <div class="section">
+    <h2>Quiz Pages</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/quiz/html/1" target="_blank">HTML Basics Quiz</a><div class="desc">Test your HTML knowledge</div></div>
+      <div class="link-card"><a href="http://localhost:5173/quiz/html/2" target="_blank">HTML Elements Quiz</a><div class="desc">Elements, tags, structure</div></div>
+      <div class="link-card"><a href="http://localhost:5173/quiz/bootstrap/19" target="_blank">Bootstrap Basics Quiz</a><div class="desc">Free course quiz</div></div>
+    </div>
+  </div>
+
+  <!-- CERTIFICATES -->
+  <div class="section">
+    <h2>Certificate Pages</h2>
+    <div class="grid">
+      <div class="link-card"><a href="http://localhost:5173/certificate/html" target="_blank">HTML Certificate</a><div class="desc">Completion certificate for HTML</div></div>
+      <div class="link-card"><a href="http://localhost:5173/certificate/css" target="_blank">CSS Certificate</a><div class="desc">Completion certificate for CSS</div></div>
+      <div class="link-card"><a href="http://localhost:5173/certificate/python" target="_blank">Python Certificate</a><div class="desc">Completion certificate for Python</div></div>
+    </div>
+  </div>
+
+  <!-- TEST FLOW -->
+  <div class="section">
+    <h2>Complete Test Flow (Step by Step)</h2>
+    <div style="line-height: 2; font-size: 0.9rem;">
+      <div><strong>1.</strong> Go to <a href="http://localhost:5173/login" target="_blank" style="color:#38bdf8;">Login</a> → Sign in as student@learnhub.com / student123</div>
+      <div><strong>2.</strong> Browse <a href="http://localhost:5173/courses" target="_blank" style="color:#38bdf8;">Courses</a> → Click on a paid course like "Learn CSS ($9)"</div>
+      <div><strong>3.</strong> On course page, click "Buy Now" → goes to Payment page</div>
+      <div><strong>4.</strong> Try entering promo code <strong style="color:#c084fc;">LEARN20</strong> and click Apply → see 20% discount</div>
+      <div><strong>5.</strong> Select payment method: JazzCash / EasyPaisa / Bank Transfer</div>
+      <div><strong>6.</strong> Click "Complete Payment" → see success confirmation with Payment ID</div>
+      <div><strong>7.</strong> Click "View Course" → course is now unlocked!</div>
+      <div><strong>8.</strong> Start lessons, take quizzes, complete the course</div>
+      <div><strong>9.</strong> Check <a href="http://localhost:5173/dashboard" target="_blank" style="color:#38bdf8;">Dashboard</a> for progress charts and certificates</div>
+    </div>
+  </div>
+
+</body>
+</html>
