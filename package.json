@@ -1,9 +1,9 @@
 {
   "name": "learn-hub",
   "version": "1.0.0",
-  "description": "Coding learning platform - courses, docs, videos, practice, quizzes, progress",
   "scripts": {
     "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "install": "npm --prefix backend install && npm --prefix frontend install",
     "dev": "concurrently -n backend,frontend -c blue,green \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
     "seed": "npm --prefix backend run seed",
     "build": "npm --prefix frontend run build",
@@ -11,8 +11,5 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
-  },
-  "dependencies": {
-    "localtunnel": "^2.0.2"
   }
 }
