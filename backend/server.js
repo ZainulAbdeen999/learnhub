@@ -536,4 +536,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Server error' });
 });
 
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+module.exports = app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
+}

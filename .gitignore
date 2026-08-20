@@ -4,3 +4,8 @@ data/
 *.log
 dev.err
 TEST_LINKS.html
+cloudflared.exe
+tunnel*.txt
+tunnel*.log
+PUBLIC_URL.txt
+*.exe
