@@ -1,7 +1,0 @@
-{
-  "installCommand": "npm --prefix frontend install",
-  "buildCommand": "npm --prefix frontend run build",
-  "outputDirectory": "frontend/dist",
-  "framework": "vite",
-  "ignoreCommand": "npx --yes -p ignored-files-cli@1 ignored-files --params=\"backend,node_modules,data,.git\""
-}
