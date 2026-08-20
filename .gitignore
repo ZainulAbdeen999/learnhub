@@ -1,5 +1,6 @@
 node_modules/
-dist/
+/dist/
+!frontend/dist/
 data/
 *.log
 dev.err
@@ -10,3 +11,4 @@ tunnel*.log
 PUBLIC_URL.txt
 *.exe
 .vercel
+.vercelignore
