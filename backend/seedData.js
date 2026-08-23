@@ -9197,6 +9197,1456 @@ Bootstrap provides margin and padding utilities with a consistent naming pattern
   insertQuestion(db, 25, 'What does the class d-none d-md-block do?', JSON.stringify(['Hides the element always', 'Hides on mobile, shows on medium and larger screens', 'Shows only on mobile', 'Makes the element transparent']), 1, 'd-none hides the element, d-md-block shows it as a block element on medium (768px+) screens and above.');
   insertQuestion(db, 25, 'What is the spacing for mt-3 in Bootstrap?', JSON.stringify(['0.25rem', '0.5rem', '1rem', '1.5rem']), 2, 'mt-3 = margin-top: 1rem (16px). Bootstrap spacing scale: 0=0, 1=0.25rem, 2=0.5rem, 3=1rem, 4=1.5rem, 5=3rem.');
 
+  // ============================================================
+  // 8. LEARN JAVA
+  // ============================================================
+  insertCourse(db, 'Learn Java', 'java', 'Master Java, one of the most popular programming languages in the world. Learn syntax, object-oriented programming, and build real applications with hands-on examples.', 'coffee', '#f89820', 8, 14, 'en');
+
+  // --- Topic: Java Basics ---
+  insertTopic(db, 8, 'Java Basics', 1);
+
+  insertLesson(db, 26, 'Java Hello World', `## What is Java?
+
+Java is a **high-level, class-based, object-oriented** programming language designed around the principle of *"write once, run anywhere"*. Java code is compiled into **bytecode**, which runs on the **JVM (Java Virtual Machine)** — so the same compiled program runs unchanged on Windows, macOS, and Linux. Java powers Android apps, enterprise backends, banking systems, and massive-scale web services.
+
+Three terms you will see everywhere:
+
+- **JDK (Java Development Kit)** — The toolkit you install to develop; includes the compiler \`javac\`.
+- **JRE (Java Runtime Environment)** — What you need to *run* Java programs.
+- **JVM (Java Virtual Machine)** — The engine that executes bytecode.
+
+## Your First Program
+
+\`\`\`java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+\`\`\`
+
+Every executable Java program starts at a \`main\` method — this is the entry point where the JVM begins running your code.
+
+## Anatomy of a Java Program
+
+| Piece | Meaning |
+|-------|---------|
+| \`public class Main\` | All Java code lives inside a class; the file must be named \`Main.java\` |
+| \`public static void main(String[] args)\` | The exact signature the JVM looks for |
+| \`System.out.println(...)\` | Prints a line of text to the console |
+| \`; \` semicolons | Every statement ends with a semicolon |
+
+## Variables and Data Types
+
+Java is **statically typed** — every variable has a declared type that cannot change:
+
+\`\`\`java
+int age = 25;               // whole numbers
+double price = 9.99;        // decimal numbers
+char grade = 'A';           // a single character
+boolean isActive = true;    // true or false
+String name = "Alice";      // text (a class, not a primitive)
+final int MAX_USERS = 100;  // constant — cannot be reassigned
+\`\`\`
+
+## Comments
+
+\`\`\`java
+// Single-line comment
+
+/* Multi-line
+   comment */
+\`\`\``, `public class Main {
+    public static void main(String[] args) {
+        String name = "Alice";
+        int age = 25;
+        double height = 1.68;
+        boolean isStudent = true;
+
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Height: " + height);
+        System.out.println("Is student: " + isStudent);
+
+        int ageNextYear = age + 1;
+        System.out.println("Age next year: " + ageNextYear);
+    }
+}`, 'https://www.youtube.com/embed/eIrMbAQSUl4', 1, null);
+
+  insertLesson(db, 26, 'Control Flow & Arrays', `## If / Else
+
+\`\`\`java
+int score = 85;
+
+if (score >= 90) {
+    System.out.println("Grade: A");
+} else if (score >= 80) {
+    System.out.println("Grade: B");
+} else {
+    System.out.println("Grade: C or below");
+}
+\`\`\`
+
+Combine conditions with comparison operators (\`==\`, \`!=\`, \`>\`, \`<\`, \`>=\`, \`<=\`) and logical operators: \`&&\` (AND), \`||\` (OR), \`!\` (NOT).
+
+## Switch Statement
+
+\`\`\`java
+int day = 3;
+
+switch (day) {
+    case 1:
+        System.out.println("Monday");
+        break;   // prevents fall-through
+    case 2:
+        System.out.println("Tuesday");
+        break;
+    default:
+        System.out.println("Another day");
+}
+\`\`\`
+
+## Loops
+
+\`\`\`java
+// Classic for loop
+for (int i = 1; i <= 5; i++) {
+    System.out.println("i = " + i);
+}
+
+// While loop — checks condition before each iteration
+int count = 0;
+while (count < 3) {
+    System.out.println("count = " + count);
+    count++;
+}
+
+// Do-while — body always runs at least once
+do {
+    System.out.println("Runs once");
+} while (false);
+\`\`\`
+
+## Arrays
+
+\`\`\`java
+int[] scores = { 90, 85, 77, 94 };   // creation with values
+int[] slots = new int[10];           // ten zeros
+
+scores[0] = 91;                      // arrays are zero-indexed
+System.out.println(scores.length);   // 4 — length is a field, not a method
+
+// Enhanced for loop
+for (int s : scores) {
+    System.out.println(s);
+}
+\`\`\`
+
+Arrays have a **fixed size** once created. When you need a resizable list, you will use \`ArrayList\` later in your Java journey.`, `public class Grades {
+    public static void main(String[] args) {
+        int[] scores = { 72, 95, 88, 61, 84 };
+        int sum = 0;
+
+        for (int i = 0; i < scores.length; i++) {
+            sum += scores[i];
+
+            if (scores[i] >= 90) {
+                System.out.println("Score " + scores[i] + ": Excellent");
+            } else if (scores[i] >= 70) {
+                System.out.println("Score " + scores[i] + ": Passing");
+            } else {
+                System.out.println("Score " + scores[i] + ": Needs work");
+            }
+        }
+
+        double average = (double) sum / scores.length;
+        System.out.println("Average: " + average);
+    }
+}`, 'https://www.youtube.com/embed/eIrMbAQSUl4', 2, null);
+
+  insertQuiz(db, 26, 'Java Basics Quiz', 1);
+
+  insertQuestion(db, 26, 'Which method is the entry point of every Java application?', JSON.stringify(['public static void main(String[] args)', 'private void start()', 'public void Main()', 'static run(String args)']), 0, 'The JVM always starts execution at public static void main(String[] args). The signature must match exactly.');
+  insertQuestion(db, 26, 'Which type should you use to store a true/false value?', JSON.stringify(['int', 'boolean', 'char', 'double']), 1, 'The boolean primitive type holds only true or false.');
+  insertQuestion(db, 26, 'How do you get the number of elements in an array named scores?', JSON.stringify(['scores.length()', 'scores.size()', 'scores.length', 'len(scores)']), 2, 'Array length is a public final field accessed as scores.length — no parentheses. Strings use length() as a method.');
+
+  // --- Topic: OOP in Java ---
+  insertTopic(db, 8, 'OOP in Java', 2);
+
+  insertLesson(db, 27, 'Classes & Objects', `## Classes and Objects
+
+A **class** is a blueprint that defines state (fields) and behavior (methods). An **object** is a concrete instance created from that blueprint. One class can produce many independent objects.
+
+## Defining a Class
+
+\`\`\`java
+public class Car {
+    // Fields — the state
+    String brand;
+    int year;
+
+    // Method — the behavior
+    void honk() {
+        System.out.println(brand + " goes beep!");
+    }
+}
+\`\`\`
+
+## Creating Objects
+
+Objects are created with the \`new\` keyword, which allocates memory and calls a constructor:
+
+\`\`\`java
+Car myCar = new Car();
+myCar.brand = "Toyota";
+myCar.year = 2022;
+myCar.honk();   // Toyota goes beep!
+\`\`\`
+
+## Constructors
+
+A constructor is a special method that **initializes** a new object. It has the same name as the class, has **no return type**, and runs automatically when \`new\` is used:
+
+\`\`\`java
+public class Car {
+    String brand;
+    int year;
+
+    public Car(String brand, int year) {
+        this.brand = brand;   // this.brand = the field, brand = the parameter
+        this.year = year;
+    }
+}
+
+Car tesla = new Car("Tesla", 2024);
+\`\`\`
+
+## The this Keyword
+
+Inside a method or constructor, \`this\` refers to the current object. It is essential when a parameter has the same name as a field, and it also lets you call other constructors or methods on the instance.`, `public class BankAccount {
+    String owner;
+    double balance;
+
+    public BankAccount(String owner, double initialBalance) {
+        this.owner = owner;
+        this.balance = initialBalance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println(owner + " deposited $" + amount);
+    }
+
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient funds!");
+        } else {
+            balance -= amount;
+            System.out.println(owner + " withdrew $" + amount);
+        }
+    }
+
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount("Alice", 100);
+        acc.deposit(50);    // Alice deposited $50.0
+        acc.withdraw(200);  // Insufficient funds!
+        acc.withdraw(75);   // Alice withdrew $75.0
+    }
+}`, 'https://www.youtube.com/embed/eIrMbAQSUl4', 1, null);
+
+  insertLesson(db, 27, 'Inheritance', `## What is Inheritance?
+
+Inheritance lets a class (**child/subclass**) acquire the fields and methods of another class (**parent/superclass**). It models an *is-a* relationship and eliminates duplicated code. Use the \`extends\` keyword:
+
+\`\`\`java
+class Animal {
+    protected String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public void speak() {
+        System.out.println(name + " makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name);   // call the parent constructor first
+    }
+}
+\`\`\`
+
+## Calling the Parent with super
+
+\`super(...)\` invokes the parent constructor and **must be the first statement** in the child constructor. You can also call parent methods with \`super.method()\`.
+
+## Method Overriding
+
+A child can provide its own version of an inherited method. Always annotate it with \`@Override\` so the compiler verifies you actually overrode something:
+
+\`\`\`java
+@Override
+public void speak() {
+    System.out.println(name + " barks!");
+}
+\`\`\`
+
+## Polymorphism
+
+Because a \`Dog\` **is an** \`Animal\`, you can store a \`Dog\` in an \`Animal\` variable. The method that runs depends on the **actual object type**, not the variable type — this is polymorphism:
+
+\`\`\`java
+Animal pet = new Dog("Rex");
+pet.speak();   // Rex barks!  (Dog version wins)
+\`\`\`
+
+## Quick Reference
+
+| Keyword | Purpose |
+|---------|---------|
+| \`extends\` | Declare inheritance |
+| \`super(...)\` | Call the parent constructor |
+| \`super.method()\` | Call the parent version of a method |
+| \`@Override\` | Verify you are overriding a parent method |`, `class Animal {
+    protected String name;
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+    public void speak() {
+        System.out.println(name + " makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
+    }
+
+    @Override
+    public void speak() {
+        System.out.println(name + " barks!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal generic = new Animal("Creature");
+        Animal rex = new Dog("Rex");
+
+        generic.speak();  // Creature makes a sound
+        rex.speak();      // Rex barks!
+
+        // Polymorphism in action
+        Animal[] zoo = { generic, rex };
+        for (Animal a : zoo) {
+            a.speak();
+        }
+    }
+}`, 'https://www.youtube.com/embed/eIrMbAQSUl4', 2, null);
+
+  insertQuiz(db, 27, 'OOP in Java Quiz', 2);
+
+  insertQuestion(db, 27, 'Which keyword lets a class inherit from another class in Java?', JSON.stringify(['implements', 'inherits', 'extends', 'super']), 2, 'The extends keyword establishes inheritance: class Dog extends Animal. implements is used for interfaces.');
+  insertQuestion(db, 27, 'What is the purpose of a constructor?', JSON.stringify(['To destroy objects', 'To initialize a newly created object', 'To copy files', 'To define an interface']), 1, 'A constructor initializes the fields of a new object and runs automatically when the new keyword is used.');
+  insertQuestion(db, 27, 'Which annotation marks a method as overriding a parent method?', JSON.stringify(['@Override', '@Overload', '@Extends', '@Parent']), 0, '@Override asks the compiler to verify the method really overrides a parent method, catching typos at compile time.');
+
+  // ============================================================
+  // 9. LEARN C++
+  // ============================================================
+  insertCourse(db, 'Learn C++', 'cpp', 'Learn high-performance C++ from the ground up. Master variables, functions, pointers, memory management, and object-oriented programming.', 'cpu', '#00599C', 9, 14, 'en');
+
+  // --- Topic: C++ Fundamentals ---
+  insertTopic(db, 9, 'C++ Fundamentals', 1);
+
+  insertLesson(db, 28, 'Variables & Data Types', `## Your First C++ Program
+
+\`\`\`cpp
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+\`\`\`
+
+- \`#include <iostream>\` — pulls in the input/output stream library.
+- \`main()\` — the entry point; every C++ program starts here and returns an \`int\` status code.
+- \`std::cout << ...\` — streams output to the console. \`std::endl\` prints a newline and flushes.
+
+## Variables and Core Types
+
+C++ is **statically typed** — you declare each variable type explicitly:
+
+| Type | Example | Stores |
+|------|---------|--------|
+| \`int\` | \`int age = 25;\` | Whole numbers |
+| \`double\` | \`double pi = 3.14;\` | Floating-point decimals |
+| \`char\` | \`char grade = 'A';\` | A single character (single quotes) |
+| \`bool\` | \`bool ok = true;\` | true or false |
+| \`std::string\` | \`std::string s = "hi";\` | Text (requires \`#include <string>\`) |
+
+## Reading Input with cin
+
+\`\`\`cpp
+std::string name;
+std::cout << "Your name: ";
+std::cin >> name;   // reads one word
+\`\`\`
+
+## The auto Keyword
+
+Since C++11, the compiler can infer a type from the initializer:
+
+\`\`\`cpp
+auto count = 10;        // int
+auto price = 19.99;     // double
+auto letter = 'x';      // char
+\`\`\`
+
+Use \`auto\` for convenience — but never when it makes the type unclear to readers.`, `#include <iostream>
+#include <string>
+
+int main() {
+    std::string name;
+    int age;
+
+    std::cout << "Enter your name: ";
+    std::cin >> name;
+    std::cout << "Enter your age: ";
+    std::cin >> age;
+
+    double dogYears = age * 7.0;
+    bool adult = age >= 18;
+
+    std::cout << "Hi " << name << ", you are " << age << " years old." << std::endl;
+    std::cout << "In dog years: " << dogYears << std::endl;
+    std::cout << "Adult: " << adult << std::endl;
+
+    return 0;
+}`, 'https://www.youtube.com/embed/vLnPwxZdW4Y', 1, null);
+
+  insertLesson(db, 28, 'Functions', `## Defining Functions
+
+A function has a return type, a name, parameters, and a body:
+
+\`\`\`cpp
+int add(int a, int b) {
+    return a + b;
+}
+
+void logMessage(std::string msg) {   // void = returns nothing
+    std::cout << "[LOG] " << msg << std::endl;
+}
+\`\`\`
+
+## Declaration vs Definition
+
+You can **declare** (prototype) a function first and define it later — useful when functions call each other or live at the bottom of the file:
+
+\`\`\`cpp
+int add(int a, int b);   // declaration
+
+int main() {
+    std::cout << add(2, 3);   // OK — compiler knows the signature
+    return 0;
+}
+
+int add(int a, int b) {    // definition
+    return a + b;
+}
+\`\`\`
+
+## Pass by Value vs Pass by Reference
+
+By default, arguments are **copied** (pass by value). Adding \`&\` passes a reference so the function can modify the original variable:
+
+\`\`\`cpp
+void noChange(int x)  { x = 100; }    // copy — caller unaffected
+void change(int& x)   { x = 100; }    // reference — original modified
+\`\`\`
+
+## Default Arguments
+
+\`\`\`cpp
+void greet(std::string name = "friend") {
+    std::cout << "Hello, " << name << "!";
+}
+
+greet();       // Hello, friend!
+greet("Ada");  // Hello, Ada!
+\`\`\`
+
+## Function Overloading
+
+Multiple functions can share a name if their **parameter lists differ**:
+
+\`\`\`cpp
+int area(int side)          { return side * side; }
+int area(int w, int h)      { return w * h; }
+double area(double radius); // also fine — different types
+\`\`\`
+
+The compiler picks the correct version from the arguments you pass.`, `#include <iostream>
+#include <string>
+
+// Function declaration (prototype)
+int add(int a, int b);
+
+void greet(std::string name = "friend") {
+    std::cout << "Hello, " << name << "!" << std::endl;
+}
+
+// Pass by reference: changes affect the original variable
+void addBonus(int& score, int bonus) {
+    score += bonus;
+}
+
+// Overloading: same name, different parameter lists
+int area(int side) { return side * side; }
+int area(int w, int h) { return w * h; }
+
+int main() {
+    std::cout << add(2, 3) << std::endl;   // 5
+
+    greet();        // Hello, friend!
+    greet("Ada");   // Hello, Ada!
+
+    int score = 50;
+    addBonus(score, 10);
+    std::cout << score << std::endl;       // 60
+
+    std::cout << area(4) << " " << area(3, 5) << std::endl;  // 16 15
+    return 0;
+}
+
+// Definition comes after main — allowed thanks to the prototype
+int add(int a, int b) {
+    return a + b;
+}`, 'https://www.youtube.com/embed/vLnPwxZdW4Y', 2, null);
+
+  insertQuiz(db, 28, 'C++ Fundamentals Quiz', 1);
+
+  insertQuestion(db, 28, 'Which function is the entry point of every C++ program?', JSON.stringify(['start()', 'main()', 'init()', 'run()']), 1, 'Every C++ program begins executing in main(), which returns an int status code to the operating system.');
+  insertQuestion(db, 28, 'Which header must you include to use std::cout?', JSON.stringify(['<stdio>', '<string>', '<iostream>', '<console>']), 2, 'std::cout lives in the <iostream> header, which provides the input/output stream classes.');
+  insertQuestion(db, 28, 'What does passing a parameter by reference (int&) allow?', JSON.stringify(['Copying the argument safely', 'Modifying the original variable', 'Faster printing', 'Automatic type conversion']), 1, 'A reference parameter is an alias for the original argument, so the function can modify the caller variable directly.');
+
+  // --- Topic: Memory & OOP ---
+  insertTopic(db, 9, 'Memory & OOP', 2);
+
+  insertLesson(db, 29, 'Pointers & Memory', `## What is a Pointer?
+
+A pointer is a variable that stores the **memory address** of another variable instead of a value. Pointers are what make C++ fast and close to the metal — and also what make it dangerous if misused.
+
+## Address-of (&) and Dereference (*)
+
+\`\`\`cpp
+int x = 42;
+int* p = &x;    // p holds the ADDRESS of x
+
+std::cout << p  << std::endl;  // something like 0x7ffd3c...
+std::cout << *p << std::endl;  // 42 — * reads the value AT the address
+*p = 100;                       // writes through the pointer: x is now 100
+\`\`\`
+
+- \`&x\` — the *address-of* operator: where does \`x\` live?
+- \`*p\` — the *dereference* operator: go to that address and use the value there.
+
+## nullptr
+
+Modern pointers should start as \`nullptr\` ("points to nothing"). Dereferencing a null or uninitialized pointer is undefined behavior — check before using:
+
+\`\`\`cpp
+int* p = nullptr;
+if (p != nullptr) {
+    std::cout << *p;
+}
+\`\`\`
+
+## Dynamic Memory: new and delete
+
+Local variables live on the **stack** and die automatically. Memory allocated with \`new\` lives on the **heap** and survives until you release it with \`delete\`:
+
+\`\`\`cpp
+int* n = new int(7);      // allocate one int on the heap
+delete n;                 // free it
+
+int* arr = new int[5];    // allocate an array
+delete[] arr;             // free arrays with delete[]
+\`\`\`
+
+Forgetting \`delete\` causes a **memory leak** — the memory is never returned. Modern C++ offers smart pointers (\`unique_ptr\`, \`shared_ptr\`) that clean up automatically.
+
+## References vs Pointers
+
+| Feature | Pointer \`int*\` | Reference \`int&\` |
+|---------|----------------|-------------------|
+| Can be null | Yes | No |
+| Can be reseated | Yes | No |
+| Needs \`*\` to access value | Yes | No |
+| Must be initialized | No | Yes |`, `#include <iostream>
+
+int main() {
+    int value = 42;
+    int* ptr = &value;
+
+    std::cout << *ptr << std::endl;   // 42
+    *ptr = 100;
+    std::cout << value << std::endl;  // 100 — changed through the pointer
+
+    // Dynamic allocation on the heap
+    int* numbers = new int[3];
+    numbers[0] = 10;
+    numbers[1] = 20;
+    numbers[2] = 30;
+
+    int total = 0;
+    for (int i = 0; i < 3; i++) {
+        total += numbers[i];
+    }
+    std::cout << total << std::endl;  // 60
+
+    delete[] numbers;     // always free heap memory
+    numbers = nullptr;    // avoid dangling pointers
+
+    return 0;
+}`, 'https://www.youtube.com/embed/vLnPwxZdW4Y', 1, null);
+
+  insertLesson(db, 29, 'Classes in C++', `## Defining a Class
+
+Classes bundle data and the functions that operate on it:
+
+\`\`\`cpp
+class Player {
+public:
+    void printName();
+private:
+    std::string name;
+};
+\`\`\`
+
+Note the semicolon after the closing brace — forgetting it is a classic compile error.
+
+## Access Specifiers
+
+| Specifier | Who can access |
+|-----------|----------------|
+| \`public\` | Anyone |
+| \`private\` | Only member functions of the class (the default for \`class\`) |
+| \`protected\` | The class and its subclasses |
+
+Keeping data \`private\` and exposing behavior through methods is called **encapsulation**.
+
+## Constructors and Destructors
+
+- A **constructor** runs when an object is created; it shares the class name and takes no return type.
+- A **destructor** (~ClassName) runs when the object is destroyed — perfect for releasing resources like heap memory or files.
+
+\`\`\`cpp
+class FileHandler {
+public:
+    FileHandler()  { std::cout << "opened"; }
+    ~FileHandler() { std::cout << "closed"; }
+};
+\`\`\`
+
+## Encapsulation with Getters and Setters
+
+Expose controlled access instead of raw fields, so you can validate every change:
+
+\`\`\`cpp
+class Player {
+    int health = 100;
+public:
+    void setHealth(int h) {
+        if (h < 0) h = 0;       // validation!
+        health = h;
+    }
+    int getHealth() const { return health; }  // const = does not modify object
+};
+\`\`\``, `#include <iostream>
+#include <string>
+
+class Player {
+private:
+    std::string name;
+    int health;
+
+public:
+    Player(std::string playerName, int startingHealth) {
+        this->name = playerName;
+        this->health = startingHealth;
+    }
+
+    // Destructor
+    ~Player() {
+        std::cout << name << " left the game" << std::endl;
+    }
+
+    void takeDamage(int amount) {
+        health -= amount;
+        if (health <= 0) {
+            health = 0;
+            std::cout << name << " has been defeated!" << std::endl;
+        } else {
+            std::cout << name << " has " << health << " HP left" << std::endl;
+        }
+    }
+
+    int getHealth() const { return health; }
+};
+
+int main() {
+    Player hero("Aria", 100);
+    hero.takeDamage(30);   // Aria has 70 HP left
+    hero.takeDamage(80);   // Aria has been defeated!
+    std::cout << hero.getHealth() << std::endl;  // 0
+    return 0;
+}   // destructor prints when hero goes out of scope`, 'https://www.youtube.com/embed/vLnPwxZdW4Y', 2, null);
+
+  insertQuiz(db, 29, 'Memory & OOP Quiz', 2);
+
+  insertQuestion(db, 29, 'What does a pointer store?', JSON.stringify(['The value of a variable', 'The memory address of a variable', 'The size of a variable', 'A backup copy of a variable']), 1, 'A pointer holds the memory address of another variable. You dereference it with * to read or write the value at that address.');
+  insertQuestion(db, 29, 'Which operator frees memory allocated with new?', JSON.stringify(['free()', 'remove', 'delete', 'dispose']), 2, 'Memory allocated with new must be released with delete (or delete[] for arrays), otherwise it leaks.');
+  insertQuestion(db, 29, 'How is a destructor named?', JSON.stringify(['~ClassName', '#ClassName', 'destroy()', '!ClassName']), 0, 'A destructor is the class name prefixed with a tilde, e.g. ~Player(). It runs automatically when the object is destroyed.');
+
+  // ============================================================
+  // 10. LEARN TYPESCRIPT
+  // ============================================================
+  insertCourse(db, 'Learn TypeScript', 'typescript', 'Make your JavaScript safer with static typing. Learn TypeScript step by step, from basic annotations to interfaces and generics.', 'braces', '#3178c6', 10, 12, 'en');
+
+  // --- Topic: TypeScript Basics ---
+  insertTopic(db, 10, 'TypeScript Basics', 1);
+
+  insertLesson(db, 30, 'Basic Types', `## What is TypeScript?
+
+TypeScript is a **superset of JavaScript** created by Microsoft. All valid JavaScript is valid TypeScript — plus you get **static types**. Your code compiles (transpiles) down to plain JavaScript that runs anywhere.
+
+The big win: type errors are caught **at compile time**, before your code ever runs:
+
+\`\`\`ts
+let age: number = "thirty";
+//          ~ Error: Type 'string' is not assignable to type 'number'
+\`\`\`
+
+## Type Annotations
+
+Add a colon after a variable name to declare its type:
+
+\`\`\`ts
+let name: string = "Alice";
+let age: number = 30;
+let isAdmin: boolean = false;
+\`\`\`
+
+## Arrays and Tuples
+
+\`\`\`ts
+let scores: number[] = [90, 85, 77];
+let names: Array<string> = ["Ann", "Bob"];   // same thing, generic syntax
+
+// Tuple: fixed length, each position has its own type
+let person: [string, number] = ["Alice", 30];
+\`\`\`
+
+## Union Types
+
+A value can be one of several types using the pipe \`|\`:
+
+\`\`\`ts
+let id: string | number;
+
+id = "abc-123";   // OK
+id = 42;          // OK
+id = true;        // Error
+\`\`\`
+
+## Type Inference
+
+TypeScript is smart — if you initialize a variable, it infers the type for you:
+
+\`\`\`ts
+let count = 0;        // inferred as number
+count = "zero";       // Error even without an annotation
+\`\`\`
+
+## any vs unknown
+
+- \`any\` — opts out of type checking entirely. Avoid it; it silently disables all safety.
+- \`unknown\` — like \`any\`, but forces you to narrow/check the type before use. The safe choice.`, `let productName: string = "Coffee";
+let price: number = 4.5;
+let inStock: boolean = true;
+let tags: string[] = ["drink", "hot"];
+
+function describe(item: string, cost: number, available: boolean): string {
+    const status = available ? "in stock" : "out of stock";
+    return item + " costs $" + cost + " (" + status + ")";
+}
+
+console.log(describe(productName, price, inStock));
+// Coffee costs $4.5 (in stock)
+
+// Union types in action
+let userId: string | number;
+userId = "abc123";   // OK
+userId = 42;         // still OK
+
+// Type inference
+let count = 0;   // TypeScript knows this is a number`, 'https://www.youtube.com/embed/BwuLxPH8IDs', 1, null);
+
+  insertLesson(db, 30, 'Typing Functions', `## Parameter and Return Types
+
+Annotate what goes in and what comes out:
+
+\`\`\`ts
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+add(2, 3);      // OK
+add("2", 3);    // Compile error — caught instantly
+\`\`\`
+
+## Optional and Default Parameters
+
+Add \`?\` to make a parameter optional; optional parameters must come last. Defaults make parameters optional automatically:
+
+\`\`\`ts
+function greet(name: string, greeting?: string): string {
+    return (greeting ?? "Hello") + ", " + name + "!";
+}
+greet("Ada");               // Hello, Ada!
+greet("Ada", "Welcome");    // Welcome, Ada!
+
+function power(base: number, exponent: number = 2): number {
+    return Math.pow(base, exponent);
+}
+power(3);     // 9
+power(2, 8);  // 256
+\`\`\`
+
+## void Return Type
+
+Use \`void\` when a function returns nothing meaningful:
+
+\`\`\`ts
+function log(message: string): void {
+    console.log("[LOG]", message);
+}
+\`\`\`
+
+## Typed Arrow Functions
+
+Same rules, arrow syntax:
+
+\`\`\`ts
+const multiply = (a: number, b: number): number => a * b;
+\`\`\`
+
+## Function Types
+
+You can describe an entire function signature as a type — perfect for callbacks:
+
+\`\`\`ts
+type MathOp = (x: number, y: number) => number;
+
+const subtract: MathOp = (x, y) => x - y;
+
+function apply(a: number, b: number, op: MathOp): number {
+    return op(a, b);
+}
+
+apply(10, 5, subtract);   // 5
+\`\`\``, `function add(a: number, b: number): number {
+    return a + b;
+}
+
+const multiply = (a: number, b: number): number => a * b;
+
+// Optional parameter (must come last)
+function greet(name: string, greeting?: string): string {
+    return (greeting ?? "Hello") + ", " + name + "!";
+}
+
+// Default parameter value
+function power(base: number, exponent: number = 2): number {
+    return Math.pow(base, exponent);
+}
+
+// void = no useful return value
+function log(message: string): void {
+    console.log("[LOG]", message);
+}
+
+console.log(add(2, 3));        // 5
+console.log(multiply(4, 5));   // 20
+console.log(greet("Ada"));     // Hello, Ada!
+console.log(power(3));         // 9
+log("Function lesson complete");`, 'https://www.youtube.com/embed/BwuLxPH8IDs', 2, null);
+
+  insertQuiz(db, 30, 'TypeScript Basics Quiz', 1);
+
+  insertQuestion(db, 30, 'What does TypeScript compile down to?', JSON.stringify(['Machine code', 'JavaScript', 'WebAssembly', 'Python']), 1, 'TypeScript transpiles to plain JavaScript, so it runs in every browser and Node.js runtime.');
+  insertQuestion(db, 30, 'In let id: string | number, what is string | number called?', JSON.stringify(['An intersection type', 'A union type', 'An any type', 'Invalid syntax']), 1, 'The pipe operator creates a union type — the value can be a string OR a number.');
+  insertQuestion(db, 30, 'Which return type marks a function that returns nothing?', JSON.stringify(['empty', 'null', 'undefined', 'void']), 3, 'void means the function has no meaningful return value. Calling code should not rely on its result.');
+
+  // --- Topic: Advanced Types ---
+  insertTopic(db, 10, 'Advanced Types', 2);
+
+  insertLesson(db, 31, 'Interfaces', `## Defining Interfaces
+
+An interface describes the **shape** of an object: which properties it has and what types they are. It is erased at compile time — it exists purely for checking:
+
+\`\`\`ts
+interface User {
+    id: number;
+    name: string;
+}
+
+const alice: User = {
+    id: 1,
+    name: "Alice",
+};
+// Missing or misspelled properties = compile error
+\`\`\`
+
+## Optional Properties
+
+A question mark makes a property optional — callers can omit it:
+
+\`\`\`ts
+interface User {
+    id: number;
+    name: string;
+    email?: string;   // may be undefined
+}
+
+const bob: User = { id: 2, name: "Bob" };   // perfectly valid
+\`\`\`
+
+## readonly
+
+\`readonly\` allows assignment only when the object is created:
+
+\`\`\`ts
+interface Point {
+    readonly x: number;
+    readonly y: number;
+}
+
+const origin: Point = { x: 0, y: 0 };
+origin.x = 10;   // Error: cannot assign to x
+\`\`\`
+
+## Extending Interfaces
+
+Interfaces compose — \`Admin\` gets everything from \`User\` plus its own members:
+
+\`\`\`ts
+interface Admin extends User {
+    permissions: string[];
+}
+\`\`\`
+
+## Interfaces and Classes
+
+Classes promise to satisfy an interface with \`implements\`:
+
+\`\`\`ts
+class Guest implements User {
+    id = 0;
+    name = "Guest";
+}
+\`\`\`
+
+If \`Guest\` forgot either property, TypeScript would refuse to compile.`, `interface User {
+    readonly id: number;
+    name: string;
+    email?: string;
+}
+
+interface Admin extends User {
+    permissions: string[];
+}
+
+const alice: User = { id: 1, name: "Alice" };
+
+const root: Admin = {
+    id: 2,
+    name: "Root",
+    email: "root@app.com",
+    permissions: ["read", "write"],
+};
+
+function welcome(user: User): string {
+    return "Welcome, " + user.name + "!";
+}
+
+class Guest implements User {
+    id = 0;
+    name = "Guest";
+}
+
+console.log(welcome(alice));   // Welcome, Alice!
+console.log(welcome(root));    // Welcome, Root!
+console.log(welcome(new Guest()));  // Welcome, Guest!`, 'https://www.youtube.com/embed/BwuLxPH8IDs', 1, null);
+
+  insertLesson(db, 31, 'Generics', `## The Problem Generics Solve
+
+Without generics, reusable functions force you to choose between duplicating code or losing type safety:
+
+\`\`\`ts
+function firstNumber(items: number[]): number | undefined { return items[0]; }
+function firstString(items: string[]): string | undefined { return items[0]; }
+// ...one copy per type. Painful.
+\`\`\`
+
+## Generic Functions
+
+Generics introduce a **type parameter** \`<T>\` — a placeholder filled in when the function is called:
+
+\`\`\`ts
+function first<T>(items: T[]): T | undefined {
+    return items[0];
+}
+
+const n = first([10, 20, 30]);   // n is number
+const s = first(["a", "b"]);     // s is string
+const u = first<User>(users);    // explicit form also works
+\`\`\`
+
+One function, full type safety for every type.
+
+## Generic Constraints
+
+Constrain \`T\` with \`extends\` so you know it has certain capabilities:
+
+\`\`\`ts
+// T must have a length property
+function longest<T extends { length: number }>(a: T, b: T): T {
+    return a.length >= b.length ? a : b;
+}
+
+longest("hello", "hi");      // "hello"
+longest([1], [1, 2, 3]);     // [1, 2, 3]
+longest(3, 7);               // Error: numbers have no length
+\`\`\`
+
+## Generic Interfaces and Types
+
+Collections like \`Array<T>\` are generics under the hood. You can write your own:
+
+\`\`\`ts
+interface Box<T> {
+    content: T;
+    replaceWith(next: T): Box<T>;
+}
+
+type StringBox = Box<string>;
+\`\`\`
+
+## When to Use Generics
+
+Use them whenever the **logic is identical but the data type varies** — utility functions, API wrappers, collection helpers, and state containers. If only one concrete type will ever be used, skip the abstraction.`, `// One generic replaces many typed copies
+function first<T>(items: T[]): T | undefined {
+    return items[0];
+}
+
+// Constraint: T must have a length property
+function longest<T extends { length: number }>(a: T, b: T): T {
+    return a.length >= b.length ? a : b;
+}
+
+// Generic interface
+interface Box<T> {
+    content: T;
+    describe(): string;
+}
+
+function boxify<T>(content: T): Box<T> {
+    return {
+        content,
+        describe() {
+            return "Box containing: " + String(this.content);
+        },
+    };
+}
+
+const num = first([10, 20, 30]);        // num: number | undefined
+const str = first(["a", "b"]);          // str: string | undefined
+const word = longest("hello", "hi");    // word: "hello"
+
+console.log(num);              // 10
+console.log(str);              // "a"
+console.log(longest([1], [1, 2, 3]));  // [1, 2, 3]
+console.log(boxify("socks").describe());  // Box containing: socks`, 'https://www.youtube.com/embed/BwuLxPH8IDs', 2, null);
+
+  insertQuiz(db, 31, 'Advanced Types Quiz', 1);
+
+  insertQuestion(db, 31, 'What does an interface describe in TypeScript?', JSON.stringify(['Memory layout of objects', 'The shape of an object — its properties and their types', 'A CSS stylesheet', 'A database table']), 1, 'Interfaces define which properties an object must have and their types. They exist only at compile time and are erased in output JavaScript.');
+  insertQuestion(db, 31, 'In an interface, what does email?: string mean?', JSON.stringify(['email must be a valid email address', 'email is an optional property', 'email is read-only', 'email is private']), 1, 'The question mark marks email as optional — objects can omit it, and reading it gives string | undefined.');
+  insertQuestion(db, 31, 'In function identity<T>(value: T): T, what is T?', JSON.stringify(['A global variable', 'A type parameter filled in at call time', 'A class instance', 'A built-in module']), 1, 'T is a placeholder type parameter. The compiler infers (or you specify) the real type when the function is called.');
+
+  // ============================================================
+  // 11. LEARN GO
+  // ============================================================
+  insertCourse(db, 'Learn Go', 'go', 'Learn Go, the language of cloud computing. Master clean syntax, control flow, and built-in concurrency with goroutines and channels.', 'terminal', '#00ADD8', 11, 12, 'en');
+
+  // --- Topic: Go Fundamentals ---
+  insertTopic(db, 11, 'Go Fundamentals', 1);
+
+  insertLesson(db, 32, 'Hello World & Variables', `## Hello, Go
+
+\`\`\`go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+\`\`\`
+
+- \`package main\` — every Go file starts with a package declaration; executables live in \`main\`.
+- \`import "fmt"\` — the standard library package for formatted I/O.
+- \`func main()\` — the entry point; the program starts here.
+- No semicolons — the compiler inserts them, and the \`gofmt\` tool standardizes formatting.
+
+Run a file directly with \`go run main.go\`, or compile an executable with \`go build\`.
+
+## Variables
+
+Go offers three ways to declare:
+
+\`\`\`go
+var name string = "Alice"   // explicit type
+var age = 30                // type inferred from value
+city := "Paris"             // short form — declare AND assign (functions only)
+\`\`\`
+
+The short form \`:=\" is the idiomatic everyday choice. Variables in Go **must be used** — unused variables are compile errors.
+
+## Constants
+
+\`\`\`go
+const Pi = 3.14159
+const AppName = "LearnHub"
+\`\`\`
+
+## Basic Types
+
+| Type | Example | Notes |
+|------|---------|-------|
+| \`int\` / \`int64\` | \`42\` | Integers |
+| \`float64\` | \`3.14\` | Decimals |
+| \`string\` | \`"hello"\` | Immutable UTF-8 text |
+| \`bool\` | \`true\` | true/false |
+
+## Multiple Declarations
+
+\`\`\`go
+var x, y int = 1, 2
+a, b := "first", 2
+\`\`\`
+
+Functions can also return multiple values, which you unpack with commas:
+
+\`\`\`go
+quotient, remainder := divide(17, 5)
+\`\`\``, `package main
+
+import "fmt"
+
+func main() {
+    var name string = "Alice"
+    var age = 25
+    city := "Paris"
+    const country = "France"
+
+    var temperature float64 = 21.5
+    var sunny bool = true
+
+    fmt.Println("Name:", name)
+    fmt.Println("Age:", age)
+    fmt.Println("City:", city, "-", country)
+    fmt.Println("Temperature:", temperature)
+    fmt.Println("Sunny:", sunny)
+
+    age = age + 1
+    fmt.Println("Next year age:", age)
+
+    // Multiple variables at once
+    width, height := 1920, 1080
+    fmt.Println("Resolution:", width, "x", height)
+}`, 'https://www.youtube.com/embed/8zfDjFF0jAE', 1, null);
+
+  insertLesson(db, 32, 'Control Flow', `## If Statements
+
+Go conditions need no parentheses, but braces are mandatory:
+
+\`\`\`go
+score := 85
+
+if score >= 90 {
+    fmt.Println("Grade A")
+} else if score >= 80 {
+    fmt.Println("Grade B")
+} else {
+    fmt.Println("Keep practicing")
+}
+\`\`\`
+
+The \`if\` statement can run a short initialization first — handy for scoping temporary values:
+
+\`\`\`go
+if n := len(name); n > 10 {
+    fmt.Println("Long name of", n, "characters")
+}
+// n does not exist here
+\`\`\`
+
+## For — The Only Loop
+
+Go has exactly one loop keyword, but it covers everything:
+
+\`\`\`go
+// Classic three-part loop
+for i := 0; i < 5; i++ {
+    fmt.Println(i)
+}
+
+// While-style loop
+count := 0
+for count < 3 {
+    count++
+}
+
+// Infinite loop (break to exit)
+for {
+    break
+}
+\`\`\`
+
+Use \`break\` to exit early and \`continue\` to skip to the next iteration.
+
+## Iterating with range
+
+\`\`\`go
+scores := []int{72, 95, 88}
+
+for index, value := range scores {
+    fmt.Println(index, value)
+}
+\`\`\`
+
+## Switch
+
+Go switches do **not** fall through by default — no \`break\` needed — and one case can list multiple values:
+
+\`\`\`go
+switch day := 6; day {
+case 1, 2, 3, 4, 5:
+    fmt.Println("Weekday")
+case 6, 7:
+    fmt.Println("Weekend")
+default:
+    fmt.Println("Invalid day")
+}
+\`\`\`
+
+A bare \`switch\` with no expression works like a chain of if/else tests.`, `package main
+
+import "fmt"
+
+func main() {
+    scores := []int{72, 95, 88, 61}
+    sum := 0
+
+    for i, score := range scores {
+        sum += score
+
+        switch {
+        case score >= 90:
+            fmt.Printf("Score %d (%d): Excellent\n", i, score)
+        case score >= 70:
+            fmt.Printf("Score %d (%d): Passing\n", i, score)
+        default:
+            fmt.Printf("Score %d (%d): Needs work\n", i, score)
+        }
+    }
+
+    avg := float64(sum) / float64(len(scores))
+    fmt.Printf("Average: %.2f\n", avg)
+
+    // If with init statement
+    if avg > 75 {
+        fmt.Println("Class average looks good")
+    }
+}`, 'https://www.youtube.com/embed/8zfDjFF0jAE', 2, null);
+
+  insertQuiz(db, 32, 'Go Fundamentals Quiz', 1);
+
+  insertQuestion(db, 32, 'Which standard library package provides Println and Printf?', JSON.stringify(['io', 'print', 'fmt', 'std']), 2, 'The fmt package handles formatted I/O, including Println, Printf, and Sprintf.');
+  insertQuestion(db, 32, 'How many loop keywords does Go have?', JSON.stringify(['None — only recursion', 'One: for', 'Two: for and while', 'Three: for, while, do']), 1, 'Go has exactly one loop construct: for. It covers classic loops, while-style loops, and infinite loops.');
+  insertQuestion(db, 32, 'What does city := "Paris" do?', JSON.stringify(['Compares city with Paris', 'Declares and initializes city, inferring its type', 'Assigns without declaring', 'Creates a constant']), 1, 'The := operator declares a new variable and assigns its initial value, inferring the type from the right-hand side.');
+
+  // --- Topic: Concurrency ---
+  insertTopic(db, 11, 'Concurrency', 2);
+
+  insertLesson(db, 33, 'Goroutines', `## What is Concurrency?
+
+Concurrency means structuring a program so multiple tasks make progress independently. Go has concurrency **built into the language** — no external libraries required.
+
+## Goroutines: Lightweight Threads
+
+A **goroutine** is a function running concurrently with others. Launch one with the \`go\` keyword:
+
+\`\`\`go
+go doWork()          // runs concurrently — main does not wait
+go process(item)     // cheap: starts with a tiny stack (~2 KB)
+\`\`\`
+
+Goroutines are far lighter than OS threads — you can run **hundreds of thousands** simultaneously. The Go runtime multiplexes them onto a small pool of OS threads.
+
+## The Problem: main Exits Too Soon
+
+When \`main\` returns, the whole program exits — even if goroutines are still working. That naive code often prints nothing:
+
+\`\`\`go
+func main() {
+    go fmt.Println("from goroutine")   // may never be seen!
+    // main exits immediately
+}
+\`\`\`
+
+## Waiting with sync.WaitGroup
+
+The standard solution is a \`WaitGroup\` — a counter that main waits on:
+
+\`\`\`go
+var wg sync.WaitGroup
+
+wg.Add(1)      // announce one task
+go worker(&wg) // pass a pointer!
+
+wg.Wait()      // block until counter reaches zero
+\`\`\`
+
+Inside the worker, \`defer wg.Done()\` guarantees the counter decrements when the function finishes — even if it panics.
+
+## Rule of Thumb
+
+Always have a plan for waiting on your goroutines: \`WaitGroup\` for finite tasks, channels (next lesson) for streaming data.`, `package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func worker(id int, wg *sync.WaitGroup) {
+    defer wg.Done()   // decrement counter when this worker finishes
+    for i := 1; i <= 3; i++ {
+        fmt.Printf("Worker %d: step %d\n", id, i)
+    }
+}
+
+func main() {
+    var wg sync.WaitGroup
+
+    for id := 1; id <= 3; id++ {
+        wg.Add(1)
+        go worker(id, &wg)   // launch concurrently
+    }
+
+    wg.Wait()   // block until all workers call Done
+    fmt.Println("All workers finished")
+}`, 'https://www.youtube.com/embed/8zfDjFF0jAE', 1, null);
+
+  insertLesson(db, 33, 'Channels', `## Channels Connect Goroutines
+
+Channels are typed pipes that let goroutines **send values to each other safely** — no locks or manual synchronization needed:
+
+\`\`\`go
+ch := make(chan int)   // channel that carries int values
+ch <- 7                // send 7 into the channel
+v := <-ch              // receive a value from the channel
+\`\`\`
+
+Think of the arrow as pointing in the direction data flows.
+
+## Unbuffered Channels Synchronize
+
+An unbuffered send **blocks** until another goroutine receives, and a receive blocks until someone sends. This makes channels both communication *and* synchronization in one step:
+
+\`\`\`go
+func worker(done chan bool) {
+    fmt.Println("working...")
+    done <- true   // signal completion
+}
+
+func main() {
+    done := make(chan bool)
+    go worker(done)
+    <-done         // waits here until worker signals
+    fmt.Println("done")
+}
+\`\`\`
+
+## Buffered Channels
+
+With a buffer, sends succeed until the buffer fills up:
+
+\`\`\`go
+ch := make(chan string, 2)   // holds up to 2 values
+ch <- "a"                    // does not block
+ch <- "b"                    // does not block
+\`\`\`
+
+## Closing and Ranging
+
+Producers \`close()\` a channel when no more values will come. Consumers loop with \`range\`, which ends automatically when the channel closes:
+
+\`\`\`go
+close(ch)
+
+for v := range ch {   // stops after close and buffer drained
+    fmt.Println(v)
+}
+\`\`\`
+
+Together, goroutines and channels express the famous Go philosophy: **do not communicate by sharing memory; share memory by communicating**.`, `package main
+
+import "fmt"
+
+func producer(numbers chan int) {
+    for i := 1; i <= 5; i++ {
+        numbers <- i   // send into the channel
+    }
+    close(numbers)     // no more values coming
+}
+
+func main() {
+    numbers := make(chan int)
+
+    go producer(numbers)   // run producer concurrently
+
+    for num := range numbers {   // receive until channel closes
+        square := num * num
+        fmt.Println(num, "squared is", square)
+    }
+
+    fmt.Println("Channel closed and drained")
+}`, 'https://www.youtube.com/embed/8zfDjFF0jAE', 2, null);
+
+  insertQuiz(db, 33, 'Go Concurrency Quiz', 1);
+
+  insertQuestion(db, 33, 'Which keyword launches a function as a goroutine?', JSON.stringify(['async', 'thread', 'go', 'spawn']), 2, 'Prefixing a function call with go runs it in a new goroutine: go worker(). The caller continues without waiting.');
+  insertQuestion(db, 33, 'How do you create an unbuffered channel of ints?', JSON.stringify(['chan[int]', 'new(chan int)', 'make(chan int)', 'channel(int)']), 2, 'Channels are created with the built-in make: make(chan int). A second argument sets a buffer size.');
+  insertQuestion(db, 33, 'On an unbuffered channel, a send operation blocks until...', JSON.stringify(['The buffer is full', 'Another goroutine receives the value', 'The program exits', 'close() is called']), 1, 'Unbuffered sends wait for a ready receiver. This blocking behavior doubles as synchronization between goroutines.');
+
   console.log('All courses seeded successfully!');
 }
 

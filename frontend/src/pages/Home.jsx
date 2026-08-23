@@ -20,11 +20,16 @@ const categories = [
 
 const featuredCourses = [
   { id: 1, title: 'HTML Fundamentals', icon: 'bi-filetype-html', lessons: 12, level: 'Beginner', price: 'Free', color: '#e44d26' },
-  { id: 2, title: 'CSS Masterclass', icon: 'bi-filetype-css', lessons: 18, level: 'Beginner', price: 'Free', color: '#264de4' },
-  { id: 3, title: 'JavaScript Deep Dive', icon: 'bi-filetype-js', lessons: 25, level: 'Intermediate', price: 'Free', color: '#f7df1e' },
-  { id: 4, title: 'Python for Beginners', icon: 'bi-filetype-py', lessons: 20, level: 'Beginner', price: 'Free', color: '#3776ab' },
-  { id: 5, title: 'React Essentials', icon: 'bi-react', lessons: 15, level: 'Intermediate', price: 'Free', color: '#61dafb' },
-  { id: 6, title: 'SQL & Databases', icon: 'bi-database', lessons: 14, level: 'Beginner', price: 'Free', color: '#6f42c1' },
+  { id: 2, title: 'CSS Masterclass', icon: 'bi-filetype-css', lessons: 11, level: 'Beginner', price: 'Free', color: '#264de4' },
+  { id: 3, title: 'JavaScript Deep Dive', icon: 'bi-filetype-js', lessons: 13, level: 'Intermediate', price: 'Free', color: '#f7df1e' },
+  { id: 4, title: 'Python for Beginners', icon: 'bi-filetype-py', lessons: 12, level: 'Beginner', price: 'Free', color: '#3776ab' },
+  { id: 5, title: 'React Essentials', icon: 'bi-react', lessons: 9, level: 'Intermediate', price: 'Free', color: '#61dafb' },
+  { id: 6, title: 'SQL & Databases', icon: 'bi-database', lessons: 9, level: 'Beginner', price: 'Free', color: '#6f42c1' },
+  { id: 7, title: 'Bootstrap Framework', icon: 'bi-bootstrap', lessons: 8, level: 'Beginner', price: 'Free', color: '#7952b3' },
+  { id: 8, title: 'Learn Java', icon: 'bi-filetype-java', lessons: 8, level: 'Beginner', price: 'Paid', color: '#f89820' },
+  { id: 9, title: 'Learn C++', icon: 'bi-cpu', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#00599C' },
+  { id: 10, title: 'Learn TypeScript', icon: 'bi-braces', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#3178c6' },
+  { id: 11, title: 'Learn Go', icon: 'bi-terminal', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#00ADD8' },
 ];
 
 const features = [
@@ -161,8 +166,8 @@ export default function Home() {
 
             <div className="d-flex justify-content-center gap-3 gap-md-4 flex-wrap stat-grid">
               {[
-                { num: '10+', label: 'Courses', icon: 'bi-book-half' },
-                { num: '100+', label: 'Lessons', icon: 'bi-journal-text' },
+                { num: '14+', label: 'Courses', icon: 'bi-book-half' },
+                { num: '120+', label: 'Lessons', icon: 'bi-journal-text' },
                 { num: '5', label: 'Languages', icon: 'bi-translate' },
                 { num: '✓', label: 'Certificates', icon: 'bi-award' },
               ].map((s, i) => (
@@ -369,6 +374,42 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ─── TESTIMONIALS ─── */}
+        <section className="mb-5 px-3 px-md-4">
+          <div className="text-center mb-4">
+            <div className="section-divider mx-auto mb-3" style={{ background: 'linear-gradient(90deg, #ffc107, #fd7e14)' }}></div>
+            <h2 className="fw-bold mb-2">Loved by Learners</h2>
+            <p className="text-muted" style={{ fontSize: '1.05rem' }}>See what our students are saying</p>
+          </div>
+          <div className="row g-4 justify-content-center">
+            {[
+              { name: 'Ali Khan', role: 'Frontend Developer', text: 'LearnHub made coding so easy to understand. The live editor and quizzes help me practice while I learn. Best free platform!', stars: 5, color: '#198754' },
+              { name: 'Sara Ahmed', role: 'CS Student', text: 'I love that I can learn in Roman Urdu. The courses are well-structured and the certificates look great on my LinkedIn.', stars: 5, color: '#0d6efd' },
+              { name: 'Ahmed Raza', role: 'Self-Taught Dev', text: 'From HTML basics to Python — I learned everything here for free. The code playground is my favorite feature. Highly recommended!', stars: 5, color: '#6f42c1' },
+            ].map((t, i) => (
+              <div className="col-md-4" key={i}>
+                <div className="card border-0 shadow-sm rounded-4 p-4 h-100" style={{ transition: 'all 0.3s ease' }}>
+                  <div className="d-flex align-items-center gap-2 mb-3">
+                    <div className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style={{ width: 44, height: 44, background: t.color, fontSize: '1.1rem' }}>
+                      {t.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h6 className="fw-bold mb-0">{t.name}</h6>
+                      <small className="text-muted">{t.role}</small>
+                    </div>
+                  </div>
+                  <div className="mb-3">
+                    {Array.from({ length: t.stars }, (_, j) => (
+                      <i key={j} className="bi bi-star-fill text-warning me-1" style={{ fontSize: '0.85rem' }}></i>
+                    ))}
+                  </div>
+                  <p className="text-muted mb-0" style={{ fontSize: '0.93rem', lineHeight: 1.7 }}>"{t.text}"</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
