@@ -509,56 +509,78 @@ app.post('/api/promo/validate', auth, async (req, res) => {
   res.json({ valid: true, discount: promo.discount, description: promo.description, finalPrice, originalPrice: course.price });
 });
 
-// ─── Code Execution API (Piston) ──────────────────────
-const PISTON_URL = 'https://emkc.org/api/v2/piston/execute';
+// ─── Code Execution API (Judge0 CE) ──────────────────────
+const https = require('https');
+const JUDGE0_URL = 'https://ce.judge0.com';
 const LANG_MAP = {
-  python: 'python3',
-  javascript: 'javascript',
-  js: 'javascript',
-  html: 'html',
-  typescript: 'typescript',
-  go: 'go',
-  java: 'java',
-  cpp: 'c++',
-  c: 'c',
+  python: 71,     // Python 3
+  javascript: 63, // JavaScript (Node.js)
+  js: 63,
+  typescript: 74, // TypeScript (Node.js)
+  go: 60,         // Go
+  java: 62,       // Java
+  cpp: 54,        // C++ (GCC)
+  c: 50,          // C (GCC)
+  html: -1,       // handled client-side
 };
+
+function postJSON(url, data) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify(data);
+    const parsed = new URL(url);
+    const req = https.request({
+      hostname: parsed.hostname,
+      path: parsed.pathname + (parsed.search || ''),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+      timeout: 25000,
+    }, res => {
+      let chunks = '';
+      res.on('data', c => chunks += c);
+      res.on('end', () => resolve({ status: res.statusCode, text: chunks }));
+    });
+    req.on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('Request timeout')); });
+    req.write(body);
+    req.end();
+  });
+}
 
 app.post('/api/execute', async (req, res) => {
   const { language, code, stdin } = req.body || {};
   if (!code) return res.status(400).json({ error: 'No code provided' });
 
-  const pistonLang = LANG_MAP[(language || '').toLowerCase()];
-  if (!pistonLang) {
+  const langId = LANG_MAP[(language || '').toLowerCase()];
+  if (!langId) {
     return res.status(400).json({ error: `Unsupported language: ${language}. Supported: ${Object.keys(LANG_MAP).join(', ')}` });
+  }
+  if (langId === -1) {
+    return res.status(400).json({ error: 'HTML is executed client-side in the browser' });
   }
 
   try {
     const payload = {
-      language: pistonLang,
-      version: '*',
-      files: [{ content: code }],
+      source_code: code,
+      language_id: langId,
       ...(stdin ? { stdin } : {}),
     };
 
-    const response = await fetch(PISTON_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    const resp = await postJSON(`${JUDGE0_URL}/submissions?base64_encoded=false&wait=true`, payload);
 
-    if (!response.ok) {
-      const err = await response.text();
-      return res.status(502).json({ error: 'Execution service error', details: err });
+    if (resp.status < 200 || resp.status >= 300) {
+      return res.status(502).json({ error: 'Execution service error', details: resp.text });
     }
 
-    const result = await response.json();
-    const run = result.run || {};
+    const result = JSON.parse(resp.text);
+    const stdout = result.stdout || '';
+    const stderr = result.stderr || result.compile_output || '';
     res.json({
-      output: (run.stdout || '') + (run.stderr || ''),
-      stdout: run.stdout || '',
-      stderr: run.stderr || '',
-      code: run.code,
-      signal: run.signal,
+      output: stdout + stderr,
+      stdout,
+      stderr,
+      code: result.status?.id === 3 ? 0 : 1,
+      executionTime: result.time,
+      memory: result.memory,
     });
   } catch (err) {
     console.error('Code execution error:', err.message);
