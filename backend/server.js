@@ -509,20 +509,10 @@ app.post('/api/promo/validate', auth, async (req, res) => {
   res.json({ valid: true, discount: promo.discount, description: promo.description, finalPrice, originalPrice: course.price });
 });
 
-// ─── Code Execution API (Judge0 CE) ──────────────────────
+// ─── Code Execution API (Own Executor Server) ──────────
 const https = require('https');
-const JUDGE0_URL = 'https://ce.judge0.com';
-const LANG_MAP = {
-  python: 71,     // Python 3
-  javascript: 63, // JavaScript (Node.js)
-  js: 63,
-  typescript: 74, // TypeScript (Node.js)
-  go: 60,         // Go
-  java: 62,       // Java
-  cpp: 54,        // C++ (GCC)
-  c: 50,          // C (GCC)
-  html: -1,       // handled client-side
-};
+const EXECUTOR_URL = process.env.EXECUTOR_URL || 'http://localhost:4000';
+const SUPPORTED_LANGS = ['javascript', 'python', 'c', 'cpp', 'java', 'go', 'typescript', 'html'];
 
 function postJSON(url, data) {
   return new Promise((resolve, reject) => {
@@ -530,17 +520,18 @@ function postJSON(url, data) {
     const parsed = new URL(url);
     const req = https.request({
       hostname: parsed.hostname,
+      port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
       path: parsed.pathname + (parsed.search || ''),
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
-      timeout: 25000,
+      timeout: 20000,
     }, res => {
       let chunks = '';
       res.on('data', c => chunks += c);
       res.on('end', () => resolve({ status: res.statusCode, text: chunks }));
     });
     req.on('error', reject);
-    req.on('timeout', () => { req.destroy(); reject(new Error('Request timeout')); });
+    req.on('timeout', () => { req.destroy(); reject(new Error('Execution server timeout')); });
     req.write(body);
     req.end();
   });
@@ -550,41 +541,24 @@ app.post('/api/execute', async (req, res) => {
   const { language, code, stdin } = req.body || {};
   if (!code) return res.status(400).json({ error: 'No code provided' });
 
-  const langId = LANG_MAP[(language || '').toLowerCase()];
-  if (!langId) {
-    return res.status(400).json({ error: `Unsupported language: ${language}. Supported: ${Object.keys(LANG_MAP).join(', ')}` });
+  const lang = (language || '').toLowerCase();
+  if (lang === 'html') {
+    return res.json({ output: '', stdout: '', stderr: '', exitCode: 0, clientSide: true });
   }
-  if (langId === -1) {
-    return res.status(400).json({ error: 'HTML is executed client-side in the browser' });
+  if (!SUPPORTED_LANGS.includes(lang)) {
+    return res.status(400).json({ error: `Unsupported: ${language}. Supported: ${SUPPORTED_LANGS.join(', ')}` });
   }
 
   try {
-    const payload = {
-      source_code: code,
-      language_id: langId,
-      ...(stdin ? { stdin } : {}),
-    };
-
-    const resp = await postJSON(`${JUDGE0_URL}/submissions?base64_encoded=false&wait=true`, payload);
-
+    const resp = await postJSON(`${EXECUTOR_URL}/execute`, { language: lang, code, stdin: stdin || '' });
     if (resp.status < 200 || resp.status >= 300) {
-      return res.status(502).json({ error: 'Execution service error', details: resp.text });
+      return res.status(502).json({ error: 'Executor error', details: resp.text });
     }
-
     const result = JSON.parse(resp.text);
-    const stdout = result.stdout || '';
-    const stderr = result.stderr || result.compile_output || '';
-    res.json({
-      output: stdout + stderr,
-      stdout,
-      stderr,
-      code: result.status?.id === 3 ? 0 : 1,
-      executionTime: result.time,
-      memory: result.memory,
-    });
+    res.json(result);
   } catch (err) {
-    console.error('Code execution error:', err.message);
-    res.status(500).json({ error: 'Failed to execute code' });
+    console.error('Executor connection error:', err.message);
+    res.status(503).json({ error: 'Code execution server is offline. Deploy executor service.', details: err.message });
   }
 });
 
