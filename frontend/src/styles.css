@@ -414,9 +414,10 @@ a:hover { color: #6ee7a0; }
 .code-editor {
   flex: 1;
   padding: 16px;
-  background: #0d1117;
-  color: #e6edf3;
-  border: none;
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+  border: none !important;
+  border-radius: 0 !important;
   outline: none;
   font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
   font-size: 13px;
@@ -424,7 +425,7 @@ a:hover { color: #6ee7a0; }
   resize: vertical;
   tab-size: 2;
 }
-.code-editor:focus { outline: none; box-shadow: none; }
+.code-editor:focus { outline: none; box-shadow: none !important; }
 
 .code-output-wrap {
   border-top: 1px solid var(--lh-border);

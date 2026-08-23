@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api, setToken } from '../api';
 import { useAuth } from '../AuthContext';
 
 export default function Register() {
@@ -9,7 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -17,9 +16,7 @@ export default function Register() {
     setBusy(true);
     setError('');
     try {
-      const data = await api('/auth/register', { method: 'POST', body: { name, email, password } });
-      setToken(data.token);
-      login(data.user);
+      await register(name, email, password);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Registration failed');

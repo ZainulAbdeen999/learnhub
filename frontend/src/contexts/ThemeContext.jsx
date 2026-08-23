@@ -4,11 +4,13 @@ const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
   const [dark, setDark] = useState(() => {
-    return localStorage.getItem('learnhub_theme') === 'dark';
+    const saved = localStorage.getItem('learnhub_theme');
+    if (saved) return saved === 'dark';
+    return true;
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'dark');
     localStorage.setItem('learnhub_theme', dark ? 'dark' : 'light');
   }, [dark]);
 

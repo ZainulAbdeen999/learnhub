@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { api, setToken } from '../api';
 import { useAuth } from '../AuthContext';
 
 export default function Login() {
@@ -16,10 +15,8 @@ export default function Login() {
     setBusy(true);
     setError('');
     try {
-      const data = await api('/auth/login', { method: 'POST', body: { email, password } });
-      setToken(data.token);
-      login(data.user);
-      navigate(data.user.role === 'admin' ? '/admin' : '/dashboard');
+      const user = await login(email, password);
+      navigate(user.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {
