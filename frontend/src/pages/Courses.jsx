@@ -7,20 +7,20 @@ const LANG_FLAGS = { en: '🇺🇸', ur: '🇵🇰', ru: '📝', ar: '🇸🇦',
 const LANG_NAMES = { en: 'English', ur: 'Urdu', ru: 'Roman Urdu', ar: 'Arabic', hi: 'Hindi' };
 
 const COURSE_ICONS = {
-  html: { text: '</>', bg: '#e44d26' },
-  css: { text: '{ }', bg: '#264de4' },
-  javascript: { text: 'JS', bg: '#f7df1e' },
-  python: { text: 'Py', bg: '#3776ab' },
-  react: { text: '⚛', bg: '#61dafb' },
-  sql: { text: 'DB', bg: '#6f42c1' },
-  bootstrap: { text: 'B', bg: '#7952b3' },
-  java: { text: 'Jv', bg: '#f89820' },
-  cpp: { text: 'C+', bg: '#00599C' },
-  typescript: { text: 'TS', bg: '#3178c6' },
-  go: { text: 'Go', bg: '#00ADD8' },
-  'html-urdu': { text: 'ہ', bg: '#e44d26' },
-  'html-roman-urdu': { text: 'H', bg: '#e44d26' },
-  'css-roman-urdu': { text: 'C', bg: '#264de4' },
+  html: { bi: 'bi-filetype-html', bg: '#e44d26' },
+  css: { bi: 'bi-filetype-css', bg: '#264de4' },
+  javascript: { bi: 'bi-filetype-js', bg: '#f7df1e' },
+  python: { bi: 'bi-filetype-py', bg: '#3776ab' },
+  react: { bi: 'bi-react', bg: '#61dafb' },
+  sql: { bi: 'bi-database', bg: '#6f42c1' },
+  bootstrap: { bi: 'bi-bootstrap', bg: '#7952b3' },
+  java: { bi: 'bi-filetype-java', bg: '#f89820' },
+  cpp: { bi: 'bi-cpu', bg: '#00599C' },
+  typescript: { bi: 'bi-braces', bg: '#3178c6' },
+  go: { bi: 'bi-terminal', bg: '#00ADD8' },
+  'html-urdu': { bi: 'bi-filetype-html', bg: '#e44d26' },
+  'html-roman-urdu': { bi: 'bi-filetype-html', bg: '#e44d26' },
+  'css-roman-urdu': { bi: 'bi-filetype-css', bg: '#264de4' },
 };
 
 export default function Courses() {
@@ -175,11 +175,11 @@ export default function Courses() {
       <div className="courses-grid">
         {courses.map(c => {
           const isPaid = c.price > 0;
-          const icon = COURSE_ICONS[c.slug] || { text: c.title?.charAt(0) || '?', bg: c.color || '#198754' };
+          const icon = COURSE_ICONS[c.slug] || { bi: 'bi-book', bg: c.color || '#198754' };
           return (
             <Link key={c.id} to={`/course/${c.slug}`} className="vip-course-card">
               <div className="vip-course-icon-wrap" style={{ background: `linear-gradient(135deg, ${icon.bg}, ${icon.bg}88)` }}>
-                <span className="vip-course-icon-text">{icon.text}</span>
+                <i className={`bi ${icon.bi} vip-course-icon-text`}></i>
                 <span className="vip-course-lang">{LANG_FLAGS[c.language] || '🌐'}</span>
               </div>
               <div className="vip-course-body">
