@@ -12,7 +12,7 @@ export async function api(path, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) || 'https://learnhub-server-orcin.vercel.app';
+  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) || 'https://zainulabdeen-api.vercel.app';
   const res = await fetch((base || '') + '/api' + path, { ...options, headers });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
