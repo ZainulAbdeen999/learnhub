@@ -20,16 +20,16 @@ const categories = [
 
 const featuredCourses = [
   { id: 1, title: 'HTML', icon: '</>', lessons: 12, level: 'Beginner', price: 'Free', color: '#e44d26', slug: 'html' },
-  { id: 2, title: 'CSS', icon: '{ }', lessons: 11, level: 'Beginner', price: 'Free', color: '#264de4', slug: 'css' },
-  { id: 3, title: 'JavaScript', icon: 'JS', lessons: 13, level: 'Intermediate', price: 'Free', color: '#f7df1e', slug: 'javascript' },
-  { id: 4, title: 'Python', icon: 'Py', lessons: 12, level: 'Beginner', price: 'Free', color: '#3776ab', slug: 'python' },
-  { id: 5, title: 'React', icon: '⚛', lessons: 9, level: 'Intermediate', price: 'Free', color: '#61dafb', slug: 'react' },
-  { id: 6, title: 'SQL', icon: 'DB', lessons: 9, level: 'Beginner', price: 'Free', color: '#6f42c1', slug: 'sql' },
+  { id: 2, title: 'CSS', icon: '{ }', lessons: 11, level: 'Beginner', price: 'Paid', color: '#264de4', slug: 'css' },
+  { id: 3, title: 'JavaScript', icon: 'JS', lessons: 13, level: 'Intermediate', price: 'Paid', color: '#f7df1e', slug: 'javascript' },
+  { id: 4, title: 'Python', icon: 'Py', lessons: 12, level: 'Beginner', price: 'Paid', color: '#3776ab', slug: 'python' },
+  { id: 5, title: 'React', icon: '⚛', lessons: 9, level: 'Intermediate', price: 'Paid', color: '#61dafb', slug: 'react' },
+  { id: 6, title: 'SQL', icon: 'DB', lessons: 9, level: 'Beginner', price: 'Paid', color: '#6f42c1', slug: 'sql' },
   { id: 7, title: 'Bootstrap', icon: 'B', lessons: 8, level: 'Beginner', price: 'Free', color: '#7952b3', slug: 'bootstrap' },
-  { id: 8, title: 'Java', icon: 'Jv', lessons: 8, level: 'Beginner', price: 'Paid', color: '#f89820', slug: 'java' },
-  { id: 9, title: 'C++', icon: 'C+', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#00599C', slug: 'cpp' },
-  { id: 10, title: 'TypeScript', icon: 'TS', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#3178c6', slug: 'typescript' },
-  { id: 11, title: 'Go', icon: 'Go', lessons: 8, level: 'Intermediate', price: 'Paid', color: '#00ADD8', slug: 'go' },
+  { id: 8, title: 'Java', icon: 'Jv', lessons: 4, level: 'Beginner', price: 'Paid', color: '#f89820', slug: 'java' },
+  { id: 9, title: 'C++', icon: 'C+', lessons: 4, level: 'Intermediate', price: 'Paid', color: '#00599C', slug: 'cpp' },
+  { id: 10, title: 'TypeScript', icon: 'TS', lessons: 4, level: 'Intermediate', price: 'Paid', color: '#3178c6', slug: 'typescript' },
+  { id: 11, title: 'Go', icon: 'Go', lessons: 4, level: 'Intermediate', price: 'Paid', color: '#00ADD8', slug: 'go' },
 ];
 
 const features = [

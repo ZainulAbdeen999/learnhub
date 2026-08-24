@@ -128,14 +128,14 @@ export default function Payment() {
           <div className="card border-0 shadow-lg" style={{ borderRadius: 16 }}>
             <div className="card-body text-center py-5 px-4">
               <div className="mb-4">
-                <div className="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10" style={{ width: 100, height: 100 }}>
+                <div className="d-inline-flex align-items-center justify-content-center rounded-circle" style={{ width: 100, height: 100, background: 'rgba(25,135,84,0.15)' }}>
                   <i className="bi bi-check-circle-fill text-success" style={{ fontSize: 64 }}></i>
                 </div>
               </div>
-              <h2 className="fw-bold text-dark mb-2">Payment Submitted!</h2>
+              <h2 className="fw-bold mb-2" style={{ color: 'var(--lh-text)' }}>Payment Submitted!</h2>
               <p className="text-muted mb-4">Your payment is being processed via <strong>{success.method}</strong></p>
 
-              <div className="card bg-light border-0 mb-4 mx-auto" style={{ maxWidth: 450, borderRadius: 12 }}>
+              <div className="card border-0 mb-4 mx-auto" style={{ maxWidth: 450, borderRadius: 12, background: 'var(--lh-bg-input)' }}>
                 <div className="card-body p-4">
                   <div className="d-flex justify-content-between mb-2">
                     <span className="text-muted">Payment ID</span>
@@ -306,8 +306,8 @@ export default function Payment() {
             <div className="d-flex flex-column gap-2">
               {/* Card */}
               <label
-                className={`p-3 rounded-3 border cursor-pointer ${method === 'card' ? 'border-success bg-success bg-opacity-10' : 'border-light'}`}
-                style={{ cursor: 'pointer' }}
+                className={`p-3 rounded-3 border cursor-pointer ${method === 'card' ? 'border-success' : ''}`}
+                style={{ cursor: 'pointer', borderColor: method === 'card' ? 'var(--lh-primary)' : 'var(--lh-border)', background: method === 'card' ? 'rgba(25,135,84,0.08)' : 'transparent' }}
               >
                 <div className="d-flex align-items-center">
                   <input type="radio" name="paymentMethod" className="form-check-input me-3" checked={method === 'card'} onChange={() => setMethod('card')} />
@@ -364,8 +364,8 @@ export default function Payment() {
 
               {/* JazzCash */}
               <label
-                className={`p-3 rounded-3 border ${method === 'jazzcash' ? 'border-success bg-success bg-opacity-10' : 'border-light'}`}
-                style={{ cursor: 'pointer' }}
+                className={`p-3 rounded-3 border ${method === 'jazzcash' ? 'border-success' : ''}`}
+                style={{ cursor: 'pointer', borderColor: method === 'jazzcash' ? 'var(--lh-primary)' : 'var(--lh-border)', background: method === 'jazzcash' ? 'rgba(25,135,84,0.08)' : 'transparent' }}
               >
                 <div className="d-flex align-items-center">
                   <input type="radio" name="paymentMethod" className="form-check-input me-3" checked={method === 'jazzcash'} onChange={() => setMethod('jazzcash')} />
@@ -389,8 +389,8 @@ export default function Payment() {
 
               {/* EasyPaisa */}
               <label
-                className={`p-3 rounded-3 border ${method === 'easypaisa' ? 'border-success bg-success bg-opacity-10' : 'border-light'}`}
-                style={{ cursor: 'pointer' }}
+                className={`p-3 rounded-3 border ${method === 'easypaisa' ? 'border-success' : ''}`}
+                style={{ cursor: 'pointer', borderColor: method === 'easypaisa' ? 'var(--lh-primary)' : 'var(--lh-border)', background: method === 'easypaisa' ? 'rgba(25,135,84,0.08)' : 'transparent' }}
               >
                 <div className="d-flex align-items-center">
                   <input type="radio" name="paymentMethod" className="form-check-input me-3" checked={method === 'easypaisa'} onChange={() => setMethod('easypaisa')} />
@@ -414,8 +414,8 @@ export default function Payment() {
 
               {/* Bank Transfer */}
               <label
-                className={`p-3 rounded-3 border ${method === 'bank' ? 'border-success bg-success bg-opacity-10' : 'border-light'}`}
-                style={{ cursor: 'pointer' }}
+                className={`p-3 rounded-3 border ${method === 'bank' ? 'border-success' : ''}`}
+                style={{ cursor: 'pointer', borderColor: method === 'bank' ? 'var(--lh-primary)' : 'var(--lh-border)', background: method === 'bank' ? 'rgba(25,135,84,0.08)' : 'transparent' }}
               >
                 <div className="d-flex align-items-center">
                   <input type="radio" name="paymentMethod" className="form-check-input me-3" checked={method === 'bank'} onChange={() => setMethod('bank')} />
@@ -427,7 +427,7 @@ export default function Payment() {
                 </div>
                 {method === 'bank' && (
                   <div className="mt-3 ms-5">
-                    <div className="card bg-light border-0" style={{ borderRadius: 10 }}>
+                    <div className="card border-0" style={{ borderRadius: 10, background: 'var(--lh-bg-input)' }}>
                       <div className="card-body p-3">
                         <h6 className="fw-bold mb-2"><i className="bi bi-bank me-1"></i> Bank Details</h6>
                         <div className="row g-2 small">
@@ -585,10 +585,10 @@ export default function Payment() {
               { icon: 'gem', label: 'Premium' },
               { icon: 'globe2', label: 'Global' }
             ].map((badge, i) => (
-              <div key={i} className="text-center">
-                <div className="d-inline-flex align-items-center justify-content-center rounded-circle bg-light mb-1" style={{ width: 44, height: 44 }}>
-                  <i className={`bi bi-${badge.icon} text-success fs-6`}></i>
-                </div>
+                <div key={i} className="text-center">
+                  <div className="d-inline-flex align-items-center justify-content-center rounded-circle mb-1" style={{ width: 44, height: 44, background: 'rgba(25,135,84,0.12)' }}>
+                    <i className={`bi bi-${badge.icon} text-success fs-6`}></i>
+                  </div>
                 <small className="d-block text-muted" style={{ fontSize: '0.7rem' }}>{badge.label}</small>
               </div>
             ))}

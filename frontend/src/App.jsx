@@ -19,7 +19,7 @@ import Payment from './pages/Payment';
 
 function Sidebar({ open, setOpen }) {
   const { user, logout } = useAuth();
-  const { dark, toggle: toggleTheme } = useTheme();
+  const { theme: dark, toggleTheme } = useTheme();
   const { lang, setLang, LANGUAGES } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();

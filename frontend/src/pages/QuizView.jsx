@@ -5,6 +5,13 @@ import PurchaseGate from '../components/PurchaseGate';
 import { api } from '../api';
 import { useAuth } from '../AuthContext';
 
+const COURSE_ICONS = {
+  html: 'bi-filetype-html', css: 'bi-filetype-css', javascript: 'bi-filetype-js',
+  python: 'bi-filetype-py', sql: 'bi-database', react: 'bi-react',
+  bootstrap: 'bi-bootstrap', java: 'bi-cup', cpp: 'bi-cpu',
+  typescript: 'bi-filetype-tsx', go: 'bi-terminal',
+};
+
 export default function QuizView() {
   const { courseSlug, quizId } = useParams();
   const navigate = useNavigate();
@@ -58,8 +65,8 @@ export default function QuizView() {
   return (
     <>
       <div className="d-flex align-items-center gap-3 mb-4">
-        <div className="rounded-3 d-flex align-items-center justify-content-center text-white flex-shrink-0" style={{ width: 48, height: 48, background: course.color, fontWeight: 700 }}>
-          {course.title[0]}
+        <div className="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: 48, height: 48, background: `linear-gradient(135deg, ${course.color}20, ${course.color}40)` }}>
+          <i className={`bi ${COURSE_ICONS[courseSlug] || 'bi-clipboard-check'} fs-4`} style={{ color: course.color }}></i>
         </div>
         <div>
           <h4 className="fw-bold mb-0">{quiz.title}</h4>

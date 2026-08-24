@@ -1,26 +1,26 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const ThemeContext = createContext(null);
+const ThemeContext = createContext({ theme: 'dark', toggleTheme: () => {} });
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(() => {
-    const saved = localStorage.getItem('learnhub_theme');
-    if (saved) return saved === 'dark';
-    return true;
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('learnhub_theme') || 'dark';
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'dark');
-    localStorage.setItem('learnhub_theme', dark ? 'dark' : 'light');
-  }, [dark]);
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    localStorage.setItem('learnhub_theme', theme);
+  }, [theme]);
 
-  function toggle() { setDark(d => !d); }
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
 
   return (
-    <ThemeContext.Provider value={{ dark, toggle }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 }
 
-export function useTheme() { return useContext(ThemeContext); }
+export function useTheme() {
+  return useContext(ThemeContext);
+}

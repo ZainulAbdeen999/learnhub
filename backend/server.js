@@ -562,6 +562,46 @@ app.post('/api/execute', async (req, res) => {
   }
 });
 
+// ---------------- REVIEWS ----------------
+app.get('/api/reviews/:courseSlug', async (req, res) => {
+  const course = await db.prepare('SELECT id FROM courses WHERE slug = ?').get(req.params.courseSlug);
+  if (!course) return res.status(404).json({ error: 'Course not found' });
+  const reviews = await db.prepare(
+    'SELECT r.*, u.name AS user_name FROM reviews r JOIN users u ON u.id = r.user_id WHERE r.course_id = ? ORDER BY r.created_at DESC'
+  ).all(course.id);
+  const avg = await db.prepare('SELECT AVG(rating) AS avg_rating, COUNT(*) AS total FROM reviews WHERE course_id = ?').get(course.id);
+  res.json({ reviews, avgRating: avg.avg_rating ? Math.round(avg.avg_rating * 10) / 10 : 0, totalReviews: avg.total });
+});
+
+app.post('/api/reviews/:courseSlug', auth, async (req, res) => {
+  const course = await db.prepare('SELECT id FROM courses WHERE slug = ?').get(req.params.courseSlug);
+  if (!course) return res.status(404).json({ error: 'Course not found' });
+  const { rating, comment } = req.body || {};
+  if (!rating || rating < 1 || rating > 5) return res.status(400).json({ error: 'Rating must be 1-5' });
+  try {
+    await db.prepare('INSERT INTO reviews (user_id, course_id, rating, comment) VALUES (?, ?, ?, ?)')
+      .run(req.user.id, course.id, rating, comment || '');
+  } catch (e) {
+    await db.prepare('UPDATE reviews SET rating = ?, comment = ? WHERE user_id = ? AND course_id = ?')
+      .run(rating, comment || '', req.user.id, course.id);
+  }
+  const review = await db.prepare('SELECT r.*, u.name AS user_name FROM reviews r JOIN users u ON u.id = r.user_id WHERE r.user_id = ? AND r.course_id = ?')
+    .get(req.user.id, course.id);
+  res.json(review);
+});
+
+app.delete('/api/admin/reviews/:id', auth, adminOnly, async (req, res) => {
+  await db.prepare('DELETE FROM reviews WHERE id = ?').run(req.params.id);
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/reviews', auth, adminOnly, async (req, res) => {
+  const reviews = await db.prepare(
+    'SELECT r.*, u.name AS user_name, u.email AS user_email, c.title AS course_title, c.slug AS course_slug FROM reviews r JOIN users u ON u.id = r.user_id JOIN courses c ON c.id = r.course_id ORDER BY r.created_at DESC'
+  ).all();
+  res.json(reviews);
+});
+
 // Serve built frontend in production
 const distPath = path.join(__dirname, '..', 'frontend', 'dist');
 if (fs.existsSync(distPath)) {
