@@ -445,6 +445,20 @@ a:hover { color: #6ee7a0; }
   border: none;
   background: #0d1117;
 }
+.playground-console {
+  margin: 0;
+  padding: 14px 16px;
+  min-height: 120px;
+  max-height: 260px;
+  overflow: auto;
+  background: #0d1117;
+  color: #e6edf3;
+  font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 /* ═══════════════ QUIZ ═══════════════ */
 .quiz-container {

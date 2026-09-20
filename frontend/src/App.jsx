@@ -9,6 +9,7 @@ import CourseDetail from './pages/CourseDetail';
 import LessonView from './pages/LessonView';
 import QuizView from './pages/QuizView';
 import Practice from './pages/Practice';
+import Playground from './pages/Playground';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -29,7 +30,8 @@ function Sidebar({ open, setOpen }) {
   const navItems = [
     { to: '/', icon: 'bi-house-door', label: 'Home' },
     { to: '/courses', icon: 'bi-book', label: 'Courses' },
-    { to: '/practice', icon: 'bi-pencil-square', label: 'Code Playground' },
+    { to: '/playground', icon: 'bi-code-slash', label: 'Code Playground' },
+    { to: '/practice', icon: 'bi-pencil-square', label: 'Practice Zone' },
   ];
 
   const userItems = user ? [
@@ -168,6 +170,7 @@ export default function App() {
             <Route path="/lesson/:courseSlug/:lessonId" element={<LessonView />} />
             <Route path="/quiz/:courseSlug/:quizId" element={<QuizView />} />
             <Route path="/practice" element={<Practice />} />
+            <Route path="/playground" element={<Playground />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

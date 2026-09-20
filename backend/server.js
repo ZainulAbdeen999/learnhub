@@ -445,12 +445,13 @@ app.get('/api/certificate/:courseSlug', auth, async (req, res) => {
   ).get(req.user.id, ...topicIds).cnt;
   const quizzes = await db.prepare('SELECT id FROM quizzes WHERE topic_id IN (' + ph + ')').all(...topicIds);
   const quizIds = quizzes.map(q => q.id);
-  let quizzesPassed = 0;
+let quizzesPassed = 0;
   if (quizIds.length > 0) {
     const qph = isPg ? quizIds.map((_, i) => '$' + (i + 1)).join(',') : quizIds.map(() => '?').join(',');
     const qArgs = isPg ? [req.user.id, ...quizIds] : [req.user.id, ...quizIds];
+    const userClause = isPg ? 'user_id = $1 AND quiz_id IN' : 'user_id = ? AND quiz_id IN';
     quizzesPassed = (await db.prepare(
-      'SELECT COUNT(DISTINCT quiz_id) AS cnt FROM quiz_attempts WHERE user_id = $1 AND quiz_id IN (' + qph + ') AND passed = 1'
+      'SELECT COUNT(DISTINCT quiz_id) AS cnt FROM quiz_attempts WHERE ' + userClause + ' (' + qph + ') AND passed = 1'
     ).get(...qArgs)).cnt;
   }
   const allDone = completedLessons >= totalLessons && totalLessons > 0;
@@ -509,22 +510,26 @@ app.post('/api/promo/validate', auth, async (req, res) => {
   res.json({ valid: true, discount: promo.discount, description: promo.description, finalPrice, originalPrice: course.price });
 });
 
-// ─── Code Execution API (Own Executor Server) ──────────
+// ─── Code Execution API (Own Executor → Wandbox fallback → local Node) ──────────
 const https = require('https');
+const http = require('http');
+const vm = require('vm');
 const EXECUTOR_URL = process.env.EXECUTOR_URL || 'http://localhost:4000';
+const WANDBOX_URL = 'https://wandbox.org/api/compile.json';
 const SUPPORTED_LANGS = ['javascript', 'python', 'c', 'cpp', 'java', 'go', 'typescript', 'html'];
 
-function postJSON(url, data) {
+function postJSON(url, data, timeout = 30000) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify(data);
     const parsed = new URL(url);
-    const req = https.request({
+    const lib = parsed.protocol === 'https:' ? https : http;
+    const req = lib.request({
       hostname: parsed.hostname,
       port: parsed.port || (parsed.protocol === 'https:' ? 443 : 80),
       path: parsed.pathname + (parsed.search || ''),
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
-      timeout: 20000,
+      timeout,
     }, res => {
       let chunks = '';
       res.on('data', c => chunks += c);
@@ -535,6 +540,92 @@ function postJSON(url, data) {
     req.write(body);
     req.end();
   });
+}
+
+// Free public Wandbox compilers for every supported language.
+const WANDBOX_COMPILER = {
+  javascript: 'nodejs-20.17.0',
+  typescript: 'typescript-5.6.2',
+  python: 'cpython-3.12.7',
+  c: 'gcc-13.2.0-c',
+  cpp: 'gcc-13.2.0',
+  java: 'openjdk-jdk-21+35',
+  go: 'go-1.23.2',
+};
+
+async function runWandbox(lang, code, stdin) {
+  const compiler = WANDBOX_COMPILER[lang];
+  if (!compiler) throw new Error('No Wandbox compiler for ' + lang);
+
+  let content = code;
+  // Go requires a full program; mirror the local executor's wrapper.
+  if (lang === 'go' && !/^\s*package\s+main/m.test(code)) {
+    content = 'package main\n\nimport "fmt"\n\n' + code;
+  }
+
+  // Java: submit under Main.java so a `public class Main` entry point compiles.
+  // It also avoids the ".java file name must match public class" error.
+  const payload = lang === 'java'
+    ? { compiler, code: '', codes: [{ file: 'Main.java', code: content }], stdin: stdin || '' }
+    : { compiler, code: content, stdin: stdin || '', options: '' };
+
+  let resp;
+  try {
+    resp = await postJSON(WANDBOX_URL, payload);
+  } catch (e) {
+    throw new Error('Wandbox unreachable: ' + e.message);
+  }
+  if (resp.status < 200 || resp.status >= 300) {
+    throw new Error('Wandbox error (' + resp.status + '): ' + resp.text.slice(0, 200));
+  }
+  const data = JSON.parse(resp.text);
+  const ok = String(data.status) === '0';
+  const stdout = data.program_output || '';
+  const stderr = ok ? (data.program_error || '') : ((data.compiler_message || data.compiler_error || data.program_message || data.program_error) || 'Execution failed');
+  return {
+    output: stdout + (stderr ? (stdout && !ok ? '\n' : '') + stderr : ''),
+    stdout,
+    stderr,
+    exitCode: ok ? 0 : 1,
+    executionTime: undefined,
+    language: lang,
+    source: 'wandbox',
+  };
+}
+
+// In-process Node runner as a reliable, offline-safe last resort for JavaScript.
+function runNodeInProcess(code) {
+  const logs = [];
+  const format = v => (typeof v === 'object' && v !== null ? JSON.stringify(v, null, 2) : String(v));
+  const sandbox = {
+    console: {
+      log: (...a) => logs.push(a.map(format).join(' ')),
+      info: (...a) => logs.push(a.map(format).join(' ')),
+      error: (...a) => logs.push('Error: ' + a.map(format).join(' ')),
+      warn: (...a) => logs.push('Warning: ' + a.map(format).join(' ')),
+    },
+    setTimeout, clearTimeout,
+    Math, JSON, Date, RegExp, String, Number, Boolean, Array, Object, Error, Map, Set, Promise,
+  };
+  sandbox.globalThis = sandbox;
+  const context = vm.createContext(sandbox);
+  let stderr = '';
+  try {
+    vm.runInContext(code, context, { timeout: 5000, filename: 'playground.js' });
+  } catch (e) {
+    stderr = e.message || 'Execution error';
+    logs.push('Error: ' + stderr);
+  }
+  const stdout = logs.join('\n');
+  return {
+    output: stdout + (stderr ? '\n' + stderr : ''),
+    stdout,
+    stderr,
+    exitCode: stderr ? 1 : 0,
+    executionTime: undefined,
+    language: 'javascript',
+    source: 'local-node',
+  };
 }
 
 app.post('/api/execute', async (req, res) => {
@@ -550,15 +641,32 @@ app.post('/api/execute', async (req, res) => {
   }
 
   try {
-    const resp = await postJSON(`${EXECUTOR_URL}/execute`, { language: lang, code, stdin: stdin || '' });
-    if (resp.status < 200 || resp.status >= 300) {
-      return res.status(502).json({ error: 'Executor error', details: resp.text });
+    let result;
+    // Tier 1: self-hosted executor (used when deployed).
+    try {
+      const resp = await postJSON(`${EXECUTOR_URL}/execute`, { language: lang, code, stdin: stdin || '' });
+      if (resp.status < 200 || resp.status >= 300) {
+        throw new Error(`Executor error ${resp.status}: ${resp.text.slice(0, 200)}`);
+      }
+      const parsed = JSON.parse(resp.text);
+      if (parsed && parsed.output !== undefined) {
+        result = parsed;
+      } else {
+        throw new Error('Empty executor response');
+      }
+    } catch (execErr) {
+      console.warn('Executor unavailable, falling back to Wandbox:', execErr.message);
+      result = await runWandbox(lang, code, stdin || '');
     }
-    const result = JSON.parse(resp.text);
+    // Tier 3: if Wandbox (or executor) also failed for JS, run it locally in-process.
+    if (lang === 'javascript' && (result.source === 'wandbox') && String(result.exitCode) !== '0') {
+      const local = runNodeInProcess(code);
+      if (!local.stderr) result = local;
+    }
     res.json(result);
   } catch (err) {
-    console.error('Executor connection error:', err.message);
-    res.status(503).json({ error: 'Code execution server is offline. Deploy executor service.', details: err.message });
+    console.error('Code execution failed:', err.message);
+    res.status(503).json({ error: 'Code execution is currently unavailable. Please try again later.', details: err.message });
   }
 });
 
